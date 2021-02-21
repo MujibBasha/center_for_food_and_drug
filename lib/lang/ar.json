@@ -1,0 +1,167 @@
+{
+  "general_content_screen": {
+    "RD": "تم تنزيله مؤخرًا",
+    "BS": "الكتب",
+    "VS": "الفيديوهات",
+    "PS": "أوراق الامتحان",
+    "UD": "تحميل",
+    "DS": "التحميلات",
+    "WL": "قائمة الرغبات",
+    "NO": "هذا العنصر غير متوفر بعد",
+    "NO_allow": "يرجى السماح ، للوصول إلى شاشة التنزيل"
+  },
+  "download_screen": {
+    "empty_data": "No Download yet"
+  },
+
+  "intro_screen":{
+    "title_page1": "كل الكتب\nفي مكان واحد",
+    "subTitle_page1": "يمكن لجميع الأشخاص حول العالم الوصول إلى هذه المكتبة.",
+    "title_page2": "عش حياتك أكثر ذكاءً معنا!",
+    "subTitle_page2": "يمكنك الوصول إلى أي كتاب بسهولة بالغة\nبدون إنفاق الكثير من\nالوقت في البحث.",
+    "title_page3": "تصبح أفضل مع خططنا",
+    "subTitle_page3": "لا مزيد من إضاعة الوقت\n  والمال مع\n  منهجي.",
+    "skip_button": "تخطى",
+    "next_button":"التالي",
+    "start_button": "البدء"
+  },
+
+  "login_screen": {
+    "your_email": "بريدك الالكتروني",
+    "password": "كلمة المرور",
+    "login_button": "تسجيل الدخول",
+    "forget_password": "هل نسيت كلمة السر؟",
+    "already_have_an_account_phrase": "هل لديك حساب ؟",
+    "sign_up_button_bottom": "إنشاء حساب",
+    "login_button_bottom": "تسجيل الدخول",
+    "do_not_have_account":"ليس لديك حساب؟ ",
+    "reset_password_local_notification": "رابط إعادة تعيين كلمة المرور له\nتم إرسالها إلى",
+    "do_not_have_account_yet": "عنوان البريد الإلكتروني الدي ادخلته غير موجود، يرجى التسجيل",
+
+    "invalid_email": "الرجاء إضافة عنوان بريد إلكتروني صالح",
+    "invalid_password": "الرجاء إضافة كلمة المرور مع +7 حرف,\nرقم أو حرف خاص",
+    "empty_form": "هذه الخانة مطلوبه"
+  },
+  "sign_up_screen": {
+
+
+    "your_email": "بريدك الالكتروني",
+    "username": "اسم االمستخدم",
+    "password": "كلمة المرور",
+    "sign_up_button": "إنشاء حساب",
+    "OR": "أو",
+    "terms_part1": "أنا أقبل تماما ",
+    "terms_part2": " شروط الخدمة",
+    "local_notification": "عنوان البريد الإلكتروني هذا لديه حساب بالفعل",
+
+    "invalid_username": "الرجاء إضافة اسم مستخدم صالح",
+    "invalid_email": "الرجاء إضافة عنوان بريد إلكتروني صالح",
+    "invalid_password": "الرجاء إضافة كلمة المرور مع +7 حرف,\nرقم أو حرف خاص",
+    "unchecked_term_and": "الرجاء القبول, هذالعنصر مطلوب"
+
+  },
+
+  "WillPopScope_content": {
+    "main_text": "تحذير",
+    "body_question_text": "هل أنت متأكد من الخروج ؟",
+    "body_answer_text": "سوف تبدأ في التسجيل مرة أخرى",
+    "close_app_hint": "سوف تخرج من التطبيق",
+    "yes_button": "نعم",
+    "no_button": "لا"
+  },
+
+  "verification_screen": {
+    "head_text": "التحقق من البريد الإلكتروني",
+    "send_email_hint_part1": "تم إرسال رسالة إلكترونية إلى",
+    "send_email_hint_part2": "ارجوك تحقق",
+    "describe": "سيتم إغلاق هذه الصفحة تلقائيًا عندما\nالنقر على رسالة التحقق",
+    "resend_button": "إعادة التحقق",
+    "back_button": "العودة",
+    "resent_note": "تم إرسال بريد بنجاح"
+  },
+
+  "drawer_items": {
+    "profile_item": "الملف الشخصي",
+    "download_item": "التنزيلات",
+    "notification_item": "إشعارات",
+    "connect_with_us_item": "تواصل معنا",
+    "about_us_item": "معلومات عنا",
+    "support_item": "الدعم",
+    "sign_out_item": "خروج"
+
+  },
+
+
+
+  "profile_screen": {
+    "user_information": "معلومات المستخدم",
+    "username": "اسم االمستخدم",
+    "email": "بريد الالكتروني",
+    "location": "موقعك",
+    "change_password_button": "تغيير كلمة المرور",
+    "authentication_switch": "المصادقة",
+    "notification_switch": "إشعارات",
+    "app_mode_switch": "الوضع المظلم",
+
+    "follow_us_item": "تابعنا",
+    "private_policy_item": "سياسة الخصوصية",
+    "delete_account_item": "حذف الحساب",
+    "change_profile_picture": "تغيير صورة الملف\nالشخصي"
+  },
+
+  "list_view_screen": {
+    "search_field": "  بحث ...",
+    "colleges_department": "قسم الكليات",
+    "all_colleges": "جميع الكليات",
+    "sections_department": "الاقسام",
+    "all_sections": "جميع الاقسام",
+
+    "all_semesters": "كل الفصول الدراسية",
+    "classroom_department": "الفصول الدراسية",
+
+    "all_specialties": "جميع التخصصات",
+    "department_specialties": "قسم الاختصاصات"
+
+  },
+
+
+  "connect_with_us_screen": {
+
+    "invalid_book_name": "الرجاء إدخال اسم كتاب صالح",
+    "invalid_book_name_length": "الرجاء إضافة اسم كتاب مع 4+ حرف",
+
+    "invalid_username": "الرجاء إضافة اسم مستخدم صالح",
+    "invalid_email": "الرجاء إضافة عنوان بريد إلكتروني صالح",
+
+
+    "your_email": "بريدك الالكتروني",
+    "username": "اسم االمستخدم",
+
+    "required_field_length": "هذا القسم مطلوب ، يرجى إضافة اسم كتاب مع +4 حرف",
+    "subject": "موضوع",
+    "descriptions": "وصف",
+    "send_button": "إرسال"
+
+  },
+
+  "general_content":{
+    "app_name_part1":"MANHAJI",
+    "app_name_part2":"LY",
+
+    "lose_internet_connections": "يرجى التحقق من الاتصال بالانترنت",
+    "permission_note": "يرجى السماح ، للوصول إلى شاشة التنزيل",
+    "unavailable_item": "هذا العنصر غير متوفر بعد",
+    "delete_account": "لقد تم حذف حسابك",
+
+    "video_store_screen_title": "قائمة مقاطع الفيديو",
+    "book_store_screen_title": "Book Store",
+
+    "upload_image": "اكتملت عملية تحميل الصورة وسنضيفها في أسرع وقت ممكن",
+    "upload_image_local_notification": "الرجاء السماح, لتحميل الصورة",
+
+
+    "required_field": "هذا القسم مطلوب",
+    "send_completed": "اكتمل الإرسال",
+    "send_failed": "فشل إرسال"
+  }
+}

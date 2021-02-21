@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "479215025111",
+    "project_id": "center-for-food-and-drug",
+    "storage_bucket": "center-for-food-and-drug.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479215025111:android:76f7ed87a6e0b17e1b2992",
+        "android_client_info": {
+          "package_name": "com.lightmoonstudioo.center_for_food_and_drug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479215025111-qa5cc2usfqcb1o34quhdlcligfkdmv79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAxZYoJ6lBFMmTZqLnkdy33Iz_z4fUzTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479215025111-qa5cc2usfqcb1o34quhdlcligfkdmv79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

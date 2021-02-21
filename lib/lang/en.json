@@ -1,0 +1,166 @@
+{
+  "general_content_screen": {
+    "recently_download": "Recently Download",
+    "book_section": "Books",
+    "video_store": "Video Store",
+    "papers": "papers",
+
+    "RD": "Recently Download",
+    "BS": "Books",
+    "VS": "Videos",
+    "PS": "Papers",
+    "UD": "Upload",
+    "DS": "Downloads",
+    "WL": "Wish List",
+    "NO": "this item not available yet",
+    "NO_allow":"Please allow,to access to download screen"
+  },
+  "download_screen": {
+    "empty_data": "No Download yet"
+  },
+  "intro_screen":{
+    "title_page1": "ALL BOOKS\nIN ONE PLACE",
+    "subTitle_page1": "all people around the world, can access to this, library.",
+    "title_page2": "LIVE YOUR LIFE SMARTER WITH US!",
+    "subTitle_page2": "you can access to any book very easy\nwithout spend a lot of\ntime to search.",
+    "title_page3": "Get better with our plans",
+    "subTitle_page3": "No more of wasting time\n and money with\n Manhaji.",
+    "skip_button": "Skip",
+    "next_button":"Next",
+    "start_button": "Get started"
+  },
+  "login_screen": {
+    "your_email": "Your Email",
+    "password": "Password",
+    "login_button": "LOGIN",
+    "forget_password": "Forgot Password?",
+    "already_have_an_account_phrase": "Already have an Account ?",
+    "sign_up_button_bottom": "Sign Up",
+    "login_button_bottom": "Sign In",
+    "do_not_have_account":"Don’t have an Account ? ",
+    "reset_password_local_notification": "A Password reset link has\nbeen sent to",
+    "do_not_have_account_yet": "your email address has not been Account yet, please sign up",
+
+    "invalid_email": "Please provide a valid Email",
+    "invalid_password": "Please add password with +7 Character ,number or special character",
+    "empty_form": "this field is required"
+
+
+  },
+  "sign_up_screen": {
+
+    "your_email": "Your Email",
+    "username": "Full Name",
+    "password": "Password",
+    "sign_up_button": "SIGN UP",
+    "OR": "OR",
+    "terms_part1": "I fully accept the ",
+    "terms_part2": "Terms of Services",
+    "local_notification": "This email address already has an account",
+
+    "invalid_username": "Please Provide a valid username with 4+ Character,\nnumber or special character",
+    "invalid_email": "Please provide a valid Email",
+    "invalid_password": "Please add password with +7 Character ,number or special character",
+    "unchecked_term_and": "please accept,this item is required"
+  },
+
+  "WillPopScope_content": {
+    "main_text": "Warning",
+    "body_question_text": "Are you sure to Exit ?",
+    "body_answer_text": "you will start sign up again",
+    "close_app_hint": "you will exit from the app",
+    "yes_button": "Yes",
+    "no_button": "No"
+  },
+
+  "verification_screen": {
+    "head_text": "Verification Email",
+    "send_email_hint_part1": "An email has been sent to",
+    "send_email_hint_part2": "Please verify",
+    "describe": "this page will close automatically when\nclicked on verification URL",
+    "resend_button": "Resend Verification",
+    "back_button": "Back to Sign up",
+    "resent_note": "verification email sent successfully"
+
+  },
+
+  "drawer_items": {
+    "profile_item": "Profile",
+    "download_item": "My Downloads",
+    "notification_item": "Notifications",
+    "connect_with_us_item": "Connect With Us",
+    "about_us_item": "About Us",
+    "support_item": "Support",
+    "sign_out_item": "Sign Out"
+  },
+
+
+
+  "profile_screen": {
+    "user_information": "User Information",
+    "username": "username",
+    "email": "Email",
+    "location": "your Location",
+    "change_password_button": "CHANGE PASSWORD",
+    "authentication_switch": "Authentication",
+    "notification_switch": "Notifications",
+    "app_mode_switch": "Dark Mode",
+
+    "follow_us_item": "Follow Us",
+    "private_policy_item": "Privacy policy",
+    "delete_account_item": "Delete Account",
+    "change_profile_picture": "Change Profile\nPicture"
+  },
+
+  "list_view_screen": {
+    "search_field": "  Search ...",
+    "colleges_department": "Colleges department",
+    "all_colleges": "All colleges",
+    "sections_department": "Sections",
+    "all_sections": "All Sections",
+
+    "all_semesters": "All Semesters",
+    "classroom_department": "Classrooms",
+
+    "all_specialties": "All specialties",
+    "department_specialties": "Department of specialties"
+
+  },
+  "connect_with_us_screen": {
+    "invalid_username": "Please Provide a valid username with 4+ Character,\nnumber or special character",
+    "invalid_email": "Please provide a valid Email",
+    "invalid_book_name": "Please Provide a valid book name",
+    "invalid_book_name_length": "Please Provide book name with 4+ character",
+
+    "your_email": "Your Email",
+    "username": "username",
+    "required_field_length": "this section is required,Please Provide book name with 4+ character",
+    "subject": "subject",
+    "descriptions": "Descriptions",
+    "send_button": "Send"
+
+  },
+
+  "general_content":{
+    "app_name_part1":"MANHAJI",
+    "app_name_part2":"LY",
+
+    "lose_internet_connections": "Please check your internet connection",
+    "permission_note": "Please allow,to access to download screen",
+    "unavailable_item": "this item not available yet",
+
+    "delete_account": "your account has been deleted",
+
+    "video_store_screen_title": "Videos list",
+    "book_store_screen_title": "قائمة الكتب",
+    "video_store_screen_title": "قائمة مقاطع الفيديو",
+    "upload_image": "The upload image process is complete,we will add it as soon as possible",
+    "upload_image_local_notification": "Please allow,To upload image",
+
+
+    "required_field": "this section is required",
+    "send_completed": "send completed",
+    "send_failed": "send failed"
+
+  }
+}
