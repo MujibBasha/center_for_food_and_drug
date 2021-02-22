@@ -125,9 +125,8 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
 
   @override
   void dispose() {
-    setState(() {
-      optionSelected = "";
-    });
+    optionSelected = "";
+
     super.dispose();
   }
 

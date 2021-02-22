@@ -19,6 +19,7 @@ class ProviderData extends ChangeNotifier {
     // {"textField":"null", "question": null""},
   ];
   int totalCurrentQuestion = 00;
+  int questionStored = 0;
 
   changeTotal(int total) {
     totalCurrentQuestion = total;

@@ -171,9 +171,13 @@ class _QuestionFieldStreamStateState extends State<QuestionFieldStreamState> {
           );
         }
         //to update total question in main Bar
-        Provider.of<ProviderData>(context, listen: false).changeTotal(
-          snapshot.data.docs[0].get("number_of_item"),
-        );
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          // Add Your Code here.
+          Provider.of<ProviderData>(context, listen: false).changeTotal(
+            snapshot.data.docs[0].get("number_of_item"),
+          );
+        });
         return ListView.builder(
           shrinkWrap: true,
           itemCount: snapshot.data.docs[0].get(
@@ -210,6 +214,9 @@ class _QuestionSelectStreamStateState extends State<QuestionSelectStreamState> {
     // TODO: implement initState
     totalQuestionStored =
         Provider.of<ProviderData>(context, listen: false).documentData.length;
+
+    Provider.of<ProviderData>(context, listen: false).questionStored =
+        totalQuestionStored;
     super.initState();
   }
 
@@ -232,8 +239,12 @@ class _QuestionSelectStreamStateState extends State<QuestionSelectStreamState> {
           );
         }
         //to update total question in main Bar
-        Provider.of<ProviderData>(context, listen: false)
-            .changeTotal(snapshot.data.docs.length);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          // Add Your Code here.
+          Provider.of<ProviderData>(context, listen: false)
+              .changeTotal(snapshot.data.docs.length);
+        });
+
         return ListView.separated(
           padding: EdgeInsets.symmetric(horizontal: 24),
           shrinkWrap: true,

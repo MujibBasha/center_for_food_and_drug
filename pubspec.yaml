@@ -66,6 +66,9 @@ dependencies:
   pull_to_refresh: ^1.6.4
   animated_bottom_navigation_bar: ^0.2.1
 
+  ##this section for create pdf
+  pdf: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

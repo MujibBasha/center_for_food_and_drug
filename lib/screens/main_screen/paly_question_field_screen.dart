@@ -1,4 +1,5 @@
 import 'package:center_for_food_and_drug/components/login_registration_components/streamState.dart';
+import 'package:center_for_food_and_drug/localization/localization_constants.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/play_question_select_screen.dart';
 import 'package:center_for_food_and_drug/tasks_provider/provider_data.dart';
 import 'package:flutter/material.dart';
@@ -14,94 +15,168 @@ class PlayQuestionFieldScreen extends StatefulWidget {
 
 class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
   @override
-  void dispose() {
-//to delete all data when close this window
-    for (TextEditingController item
-        in Provider.of<ProviderData>(context, listen: false).controllers) {
-      item.clear();
-    }
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("General Info"),
-        centerTitle: true,
-      ),
-      // key: scaffoldAddMembersScreen,
-      backgroundColor: Color(0XFF111b47), //0XFF0A0E21
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              child: ListView(children: [
-                MainBar(
-                  text: "Pages",
-                  number: "1/3",
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Selector<ProviderData, int>(
-                  selector: (context, data) => data.totalCurrentQuestion,
-                  builder: (context, total, child) {
-                    return MainBar(
-                      text: "Total Question",
-                      number: "$total",
-                    );
-                  },
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Selector<ProviderData, int>(
-                  selector: (context, data) => data.totalCurrentQuestion,
-                  builder: (context, total, child) {
-                    return MainBar(
-                      text: "answered",
-                      number: "0/$total",
-                    );
-                  },
-                ),
-              ]),
+    Size size = MediaQuery.of(context).size;
+    return WillPopScope(
+      onWillPop: () {
+        return showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: Text(
+              getTranslated(
+                  context: context,
+                  key: "main_text",
+                  typeScreen: "WillPopScope_content"),
+              style: TextStyle(color: Colors.pink),
             ),
-            Expanded(
-              child: QuestionFieldStreamState(entityID: widget.entityID),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "are you shore ?",
+                  // getTranslated(
+                  //     context: context,
+                  //     key: "body_question_text",
+                  //     typeScreen: "WillPopScope_content"),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  "you will lose the current data",
+                  // getTranslated(
+                  //     context: context,
+                  //     key: "close_app_hint",
+                  //     typeScreen: "WillPopScope_content"),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
-          ],
+            actions: [
+              FlatButton(
+                onPressed: () async {
+                  Navigator.of(context).pop(true);
+                  Provider.of<ProviderData>(context, listen: false)
+                      .documentData
+                      .clear();
+                  Provider.of<ProviderData>(context, listen: false)
+                      .controllers
+                      .clear();
+                },
+                child: Text(
+                  getTranslated(
+                      context: context,
+                      key: "yes_button",
+                      typeScreen: "WillPopScope_content"),
+                  style: TextStyle(color: Colors.pink),
+                ),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text(
+                  getTranslated(
+                      context: context,
+                      key: "no_button",
+                      typeScreen: "WillPopScope_content"),
+                  style: TextStyle(color: Colors.pink),
+                ),
+              ),
+            ],
+            backgroundColor: Color(0xff0A0E21),
+          ),
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("General Info"),
+          centerTitle: true,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 15,
-        backgroundColor: Colors.blue,
-        child: Icon(Icons.navigate_next_outlined, color: Colors.white),
-        onPressed: () {
-          // //TODO add ability to upload image to firebase from user and add this image inside the app by manager
-          // print(
-          //     ">>>>>>>>${Provider.of<ProviderData>(context, listen: false).documentData.length}");
-          // for (dynamic item in Provider.of<ProviderData>(context, listen: false)
-          //     .documentData) {
-          //   print("item:$item");
-          //   Provider.of<ProviderData>(context, listen: false).page_0.add(
-          //     {"question": item["question"], "answer": item["answer"].text},
-          //   );
-          // }
-          // print(Provider.of<ProviderData>(context, listen: false)
-          //     .page_0); //Provider.of<ProviderData>(context, listen: false).page_0
-          FocusScope.of(context).unfocus();
-          print(Provider.of<ProviderData>(context, listen: false).documentData);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  PlayQuestionSelectScreen(entityID: widget.entityID),
-            ),
-          );
-        },
+        // key: scaffoldAddMembersScreen,
+        backgroundColor: Color(0XFF111b47), //0XFF0A0E21
+        body: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: SizedBox(
+                  height: 40,
+                  child: ListView(
+                      // shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        MainBar(
+                          text: "Pages",
+                          number: "1/3",
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Selector<ProviderData, int>(
+                          selector: (context, data) =>
+                              data.totalCurrentQuestion,
+                          builder: (context, total, child) {
+                            return MainBar(
+                              text: "Total Question",
+                              number: "$total",
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Selector<ProviderData, int>(
+                          selector: (context, data) =>
+                              data.totalCurrentQuestion,
+                          builder: (context, total, child) {
+                            return MainBar(
+                              text: "answered",
+                              number: "0/$total",
+                            );
+                          },
+                        ),
+                      ]),
+                ),
+              ),
+              Expanded(
+                child: QuestionFieldStreamState(entityID: widget.entityID),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          elevation: 15,
+          backgroundColor: Colors.blue,
+          child: Icon(Icons.navigate_next_outlined, color: Colors.white),
+          onPressed: () {
+            // //TODO add ability to upload image to firebase from user and add this image inside the app by manager
+            // print(
+            //     ">>>>>>>>${Provider.of<ProviderData>(context, listen: false).documentData.length}");
+            // for (dynamic item in Provider.of<ProviderData>(context, listen: false)
+            //     .documentData) {
+            //   print("item:$item");
+            //   Provider.of<ProviderData>(context, listen: false).page_0.add(
+            //     {"question": item["question"], "answer": item["answer"].text},
+            //   );
+            // }
+            // print(Provider.of<ProviderData>(context, listen: false)
+            //     .page_0); //Provider.of<ProviderData>(context, listen: false).page_0
+            FocusScope.of(context).unfocus();
+            print(
+                Provider.of<ProviderData>(context, listen: false).documentData);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    PlayQuestionSelectScreen(entityID: widget.entityID),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
