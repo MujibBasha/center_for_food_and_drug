@@ -25,6 +25,7 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
+        autocorrect: false,
         style: TextStyle(
           color: Colors.black45,
         ),

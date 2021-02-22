@@ -88,6 +88,19 @@ class DataBase {
         .snapshots();
   }
 
+  Future getEntityData_1({String entityID, String pageType}) async {
+    //TODO
+    print("+++++++++++++++++++++");
+    await Firebase.initializeApp();
+    return FirebaseFirestore.instance
+        .collection("LY_FDA")
+        .doc("LY_FDA")
+        .collection("entities")
+        .doc(entityID)
+        .collection(pageType)
+        .get();
+  }
+
   getEntityData({String entityID, String pageType}) async* {
     //TODO
     print("+++++++++++++++++++++");

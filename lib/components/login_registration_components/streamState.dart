@@ -1,6 +1,7 @@
 import 'package:center_for_food_and_drug/components/login_registration_components/item_of_list.dart';
 import 'package:center_for_food_and_drug/pdf_view_screen/view_pdf_screen.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/paly_question_field_screen.dart';
+import 'package:center_for_food_and_drug/screens/main_screen/play_question_select_screen.dart';
 import 'package:center_for_food_and_drug/tasks_provider/provider_data.dart';
 import 'package:center_for_food_and_drug/widgets/question_form_tile_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -128,10 +129,11 @@ class _ReportStreamStateState extends State<ReportStreamState> {
 
 class QuestionFieldStreamState extends StatefulWidget {
   final String entityID;
-  final TextEditingController controller;
+  // final TextEditingController controller;
 
-  QuestionFieldStreamState(
-      {@required this.entityID, @required this.controller});
+  QuestionFieldStreamState({
+    @required this.entityID,
+  }); //@required this.controller
   @override
   _QuestionFieldStreamStateState createState() =>
       _QuestionFieldStreamStateState();
@@ -146,6 +148,9 @@ class _QuestionFieldStreamStateState extends State<QuestionFieldStreamState> {
     "manager_name",
     "date_created",
   ];
+
+  // QuerySnapshot _snapshot;
+  // int totalQuestion = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -165,17 +170,17 @@ class _QuestionFieldStreamStateState extends State<QuestionFieldStreamState> {
             ),
           );
         }
+        //to update total question in main Bar
+        Provider.of<ProviderData>(context, listen: false).changeTotal(
+          snapshot.data.docs[0].get("number_of_item"),
+        );
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: snapshot.data.docs[0].get("number_of_item"),
+          itemCount: snapshot.data.docs[0].get(
+              "number_of_item"), //TODO make this section dynamic by calculate the sum  of questions inside of DataBase not form Field that's update from the user
           itemBuilder: (context, index) {
-            Provider.of<ProviderData>(context, listen: false)
-                .controllers
-                .add({"answer": TextEditingController(), "question": ""});
             return QuestionFormTileWidget(
               questionTitle: snapshot.data.docs[0].get(questionName[index]),
-              controller: Provider.of<ProviderData>(context, listen: false)
-                  .controllers[index]["answer"],
               currentIndex: index,
             );
           },
@@ -204,7 +209,7 @@ class _QuestionSelectStreamStateState extends State<QuestionSelectStreamState> {
   void initState() {
     // TODO: implement initState
     totalQuestionStored =
-        Provider.of<ProviderData>(context, listen: false).controllers.length;
+        Provider.of<ProviderData>(context, listen: false).documentData.length;
     super.initState();
   }
 
@@ -226,27 +231,59 @@ class _QuestionSelectStreamStateState extends State<QuestionSelectStreamState> {
             ),
           );
         }
-        return ListView.builder(
+        //to update total question in main Bar
+        Provider.of<ProviderData>(context, listen: false)
+            .changeTotal(snapshot.data.docs.length);
+        return ListView.separated(
+          padding: EdgeInsets.symmetric(horizontal: 24),
           shrinkWrap: true,
           itemCount: snapshot.data.docs.length,
           itemBuilder: (context, index) {
-            Provider.of<ProviderData>(context, listen: false)
-                .controllers
-                .add({"answer": "", "question": ""});
             return QuestionSelectTileWidget(
               querySnapshot: snapshot.data.docs[index],
-              currentIndex: index + totalQuestionStored,
+              currentIndex: index + totalQuestionStored, //
             );
-
-            //   QuestionSelect(
-            //   questionTitle: snapshot.data.docs[0].get(questionName[index]),
-            //   controller: Provider.of<ProviderData>(context, listen: false)
-            //       .controllers[index]["textField"],
-            //   currentIndex: index,
-            // );
           },
+          separatorBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Divider(),
+          ),
         );
       },
     );
   }
 }
+
+//StreamBuilder(
+//       stream:
+//           DataBase().getEntityData(entityID: widget.entityID, pageType: "GIAE"),
+//       builder: (context, AsyncSnapshot snapshot) {
+//         if (snapshot.hasError) {
+//           print("gggggggggggggg");
+//         }
+//         if (!snapshot.hasData) {
+//           return Container(
+//             child: Center(
+//               child: CircularProgressIndicator(
+//                 backgroundColor: Colors.lightBlueAccent,
+//               ),
+//             ),
+//           );
+//         }
+//         return ListView.builder(
+//           shrinkWrap: true,
+//           itemCount: snapshot.data.docs[0].get("number_of_item"),
+//           itemBuilder: (context, index) {
+//             Provider.of<ProviderData>(context, listen: false)
+//                 .controllers
+//                 .add({"question": "", "answer": TextEditingController()});
+//             return QuestionFormTileWidget(
+//               questionTitle: snapshot.data.docs[0].get(questionName[index]),
+//               controller: Provider.of<ProviderData>(context, listen: false)
+//                   .controllers[index]["answer"],
+//               currentIndex: index,
+//             );
+//           },
+//         );
+//       },
+//     );

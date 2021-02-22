@@ -5,12 +5,11 @@ import 'package:provider/provider.dart';
 
 class QuestionFormTileWidget extends StatefulWidget {
   final String questionTitle;
-  final TextEditingController controller;
+  // final TextEditingController controller;
   final int currentIndex;
 
   QuestionFormTileWidget({
     @required this.questionTitle,
-    @required this.controller,
     @required this.currentIndex,
   });
   @override
@@ -21,9 +20,18 @@ class _QuestionFormTileWidgetState extends State<QuestionFormTileWidget> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    //add new controller
     Provider.of<ProviderData>(context, listen: false)
-        .controllers[widget.currentIndex]["question"] = widget.questionTitle;
+        .controllers
+        .add(TextEditingController());
+    //add new section for anew question
+    Provider.of<ProviderData>(context, listen: false)
+        .documentData
+        .add({"question": "null", "answer": "null"});
+    Provider.of<ProviderData>(context, listen: false)
+        .documentData[widget.currentIndex]["question"] = widget.questionTitle;
+
+    super.initState();
   }
 
   @override
@@ -42,7 +50,12 @@ class _QuestionFormTileWidgetState extends State<QuestionFormTileWidget> {
               height: 4,
             ),
             QuestionTextFieldTile(
-              controller: widget.controller,
+              controller: Provider.of<ProviderData>(context, listen: false)
+                  .controllers[widget.currentIndex],
+              onChange: (String currentText) {
+                Provider.of<ProviderData>(context, listen: false)
+                    .documentData[widget.currentIndex]["answer"] = currentText;
+              },
             ),
             SizedBox(
               height: 5,
@@ -54,7 +67,12 @@ class _QuestionFormTileWidgetState extends State<QuestionFormTileWidget> {
 
 class QuestionTextFieldTile extends StatefulWidget {
   final TextEditingController controller;
-  QuestionTextFieldTile({@required this.controller});
+
+  final Function onChange;
+  QuestionTextFieldTile({
+    @required this.onChange,
+    @required this.controller,
+  });
   @override
   _QuestionTextFieldTileState createState() => _QuestionTextFieldTileState();
 }
@@ -68,6 +86,7 @@ class _QuestionTextFieldTileState extends State<QuestionTextFieldTile> {
         autocorrect: false,
         decoration: InputDecoration(hintText: " ...", labelText: "required"),
         controller: widget.controller,
+        onChanged: widget.onChange,
       ),
     );
   }
@@ -76,7 +95,7 @@ class _QuestionTextFieldTileState extends State<QuestionTextFieldTile> {
 //for second screen
 
 class QuestionSelectTileWidget extends StatefulWidget {
-  final DocumentSnapshot querySnapshot;
+  final QueryDocumentSnapshot querySnapshot;
 
   final int currentIndex;
 
@@ -92,25 +111,61 @@ class QuestionSelectTileWidget extends StatefulWidget {
 class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
   String optionSelected = "";
   @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<ProviderData>(context, listen: false)
+        .documentData
+        .add({"question": "null", "answer": "null"});
+    Provider.of<ProviderData>(context, listen: false)
+            .documentData[widget.currentIndex]["question"] =
+        widget.querySnapshot.get("question");
+    super.initState();
+    print("currrrrererrererere ]]]]]>${widget.currentIndex}");
+  }
+
+  @override
+  void dispose() {
+    setState(() {
+      optionSelected = "";
+    });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-            "${(widget.currentIndex) + 1} ${widget.querySnapshot.get("question")}"),
         SizedBox(
-          height: 5,
+          height: 10,
+        ),
+        Text(
+          "Q${(widget.currentIndex) + 1} ${widget.querySnapshot.get("question")}",
+          style: TextStyle(fontSize: 18),
+        ),
+        SizedBox(
+          height: 10,
         ),
         GestureDetector(
             onTap: () {
               setState(() {
                 optionSelected = widget.querySnapshot.get("option1");
+                // Provider.of<ProviderData>(context,
+                //         listen:
+                //             false)           .page_1[widget.currentIndex]["answer"] = optionSelected;
+                // Provider.of<ProviderData>(context, listen: false)
+                //     .page_1[widget.currentIndex]["question"] =
+                //     widget.querySnapshot.get("question"); // Provider.of<ProviderData>(context, listen: false).formData
+
                 Provider.of<ProviderData>(context, listen: false)
-                        .controllers[widget.currentIndex]["answer"] =
-                    optionSelected;
-                Provider.of<ProviderData>(context, listen: false)
-                        .controllers[widget.currentIndex]["question"] =
+                        .documentData[widget.currentIndex]["question"] =
                     widget.querySnapshot.get("question");
+
+                Provider.of<ProviderData>(context, listen: false)
+                        .documentData[widget.currentIndex]["answer"] =
+                    optionSelected;
+
                 //Send this to provider TODO
               });
             },
@@ -122,12 +177,18 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
             onTap: () {
               setState(() {
                 optionSelected = widget.querySnapshot.get("option2");
+                // Provider.of<ProviderData>(context, listen: false)
+                //     .page_1[widget.currentIndex]["answer"] = optionSelected;
+                // Provider.of<ProviderData>(context, listen: false)
+                //         .page_1[widget.currentIndex]["question"] =
+                //     widget.querySnapshot.get("question");
                 Provider.of<ProviderData>(context, listen: false)
-                        .controllers[widget.currentIndex]["answer"] =
-                    optionSelected;
-                Provider.of<ProviderData>(context, listen: false)
-                        .controllers[widget.currentIndex]["question"] =
+                        .documentData[widget.currentIndex]["question"] =
                     widget.querySnapshot.get("question");
+
+                Provider.of<ProviderData>(context, listen: false)
+                        .documentData[widget.currentIndex]["answer"] =
+                    optionSelected;
               });
             },
             child: OptionTile(
@@ -138,12 +199,18 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
             onTap: () {
               setState(() {
                 optionSelected = widget.querySnapshot.get("option3");
+                // Provider.of<ProviderData>(context, listen: false)
+                //     .page_1[widget.currentIndex]["answer"] = optionSelected;
+                // Provider.of<ProviderData>(context, listen: false)
+                //         .page_1[widget.currentIndex]["question"] =
+                //     widget.querySnapshot.get("question");
                 Provider.of<ProviderData>(context, listen: false)
-                        .controllers[widget.currentIndex]["answer"] =
-                    optionSelected;
-                Provider.of<ProviderData>(context, listen: false)
-                        .controllers[widget.currentIndex]["question"] =
+                        .documentData[widget.currentIndex]["question"] =
                     widget.querySnapshot.get("question");
+
+                Provider.of<ProviderData>(context, listen: false)
+                        .documentData[widget.currentIndex]["answer"] =
+                    optionSelected;
               });
             },
             child: OptionTile(
@@ -154,18 +221,27 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
             onTap: () {
               setState(() {
                 optionSelected = widget.querySnapshot.get("option4");
+                // Provider.of<ProviderData>(context, listen: false)
+                //     .page_1[widget.currentIndex]["answer"] = optionSelected;
+                // Provider.of<ProviderData>(context, listen: false)
+                //         .page_1[widget.currentIndex]["question"] =
+                //     widget.querySnapshot.get("question");
                 Provider.of<ProviderData>(context, listen: false)
-                        .controllers[widget.currentIndex]["answer"] =
-                    optionSelected;
-                Provider.of<ProviderData>(context, listen: false)
-                        .controllers[widget.currentIndex]["question"] =
+                        .documentData[widget.currentIndex]["question"] =
                     widget.querySnapshot.get("question");
+
+                Provider.of<ProviderData>(context, listen: false)
+                        .documentData[widget.currentIndex]["answer"] =
+                    optionSelected;
               });
             },
             child: OptionTile(
                 option: "D",
                 description: widget.querySnapshot.get("option4"),
                 optionSelected: optionSelected)),
+        SizedBox(
+          height: 20,
+        ),
       ],
     ));
   }
@@ -206,33 +282,39 @@ class _OptionTileState extends State<OptionTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
         child: Row(children: [
-      Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: widget.description == widget.optionSelected
-                  ? Colors.green.withOpacity(0.6)
-                  : Colors.grey),
-        ),
-        child: Text(
-          widget.option,
-          style: TextStyle(
-            color: widget.description == widget.optionSelected
-                ? Colors.blue
-                : Colors.grey,
+          Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: widget.description == widget.optionSelected
+                      ? Colors.green.withOpacity(0.6)
+                      : Colors.grey,
+                  width: 1.5),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              widget.option,
+              style: TextStyle(
+                color: widget.description == widget.optionSelected
+                    ? Colors.blue
+                    : Colors.grey,
+              ),
+            ),
           ),
-        ),
-      ),
-      SizedBox(
-        width: 8,
-      ),
-      Text(widget.description,
-          style: TextStyle(
-            fontSize: widget.description == widget.optionSelected ? 18 : 17,
-            color: widget.description == widget.optionSelected
-                ? Colors.black
-                : Colors.black87,
-          ))
-    ]));
+          SizedBox(
+            width: 8,
+          ),
+          Text(widget.description,
+              style: TextStyle(
+                fontSize: widget.description == widget.optionSelected ? 18 : 17,
+                color: widget.description == widget.optionSelected
+                    ? Colors.black
+                    : Colors.black87,
+              ))
+        ]));
   }
 }

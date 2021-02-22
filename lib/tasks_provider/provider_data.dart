@@ -14,9 +14,16 @@ class ProviderData extends ChangeNotifier {
   String phoneNumber = "";
   String idNumber = "";
 
-  List<dynamic> controllers = [
-    // {"textField": TextEditingController(), "question": ""},
+  List<TextEditingController> controllers = [];
+  List<Map<String, String>> documentData = [
+    // {"textField":"null", "question": null""},
   ];
+  int totalCurrentQuestion = 00;
+
+  changeTotal(int total) {
+    totalCurrentQuestion = total;
+    notifyListeners();
+  }
 
   String resetEmail = "";
   bool playing = false;

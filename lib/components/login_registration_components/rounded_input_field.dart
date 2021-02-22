@@ -24,6 +24,7 @@ class RoundedInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
+        autocorrect: false,
         keyboardType: typeOfTextField == "Email"
             ? TextInputType.emailAddress
             : TextInputType.text,
