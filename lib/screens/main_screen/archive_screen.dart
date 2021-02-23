@@ -30,7 +30,7 @@ class _ArchivesScreenState extends State<ArchivesScreen> {
             Expanded(
               child: contentType == "globalArchives"
                   ? ReportStreamState()
-                  : Container(),
+                  : LocalArchiveListScreen(),
 
               // collageName: widget.collageName,
               // sectionName: widget.sectionName,
@@ -43,7 +43,7 @@ class _ArchivesScreenState extends State<ArchivesScreen> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         height: 50,
-        backgroundColor: Color(0XFF0A0E21),
+        backgroundColor: Color(0XFF111b47),
         items: <Widget>[
           Icon(
             Icons.assignment_outlined,

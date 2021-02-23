@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:center_for_food_and_drug/localization/localization_constants.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/inst_dashboard_screen.dart';
+import 'package:center_for_food_and_drug/service/database.dart';
 import 'package:center_for_food_and_drug/tasks_provider/provider_data.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -64,6 +65,9 @@ class _PlayEmployeeQuestionScreenState
   }
 
   pw.Document pdf = pw.Document();
+
+  String pdfName;
+  File pdfFile;
   // final PdfImage assetImage = await pdfImageFromImageProvider(
   // pdf: pdf.document,
   // image: const AssetImage('assets/test.jpg'),
@@ -237,12 +241,40 @@ class _PlayEmployeeQuestionScreenState
     print("start_save PDF");
     Directory documentDirectory =
         await getExternalStorageDirectory(); //getApplicationDocumentsDirectory
-    String documentPath = documentDirectory.path;
+    //String documentPath = documentDirectory.path;
+    String documentPath =
+        "storage/emulated/0/center_for_food_and_drug/download/local_archive";
     print("Path==> $documentPath");
-    final String path = "$documentPath/qqqooo.pdf";
-    File file = File(path);
+
+    pdfName =
+        "${Provider.of<ProviderData>(context, listen: false).currentEntityName}-${Provider.of<ProviderData>(context, listen: false).fullName}-${Provider.of<ProviderData>(context, listen: false).officeName}.pdf";
+
+    String path = "$documentPath/$pdfName";
+    print(path);
+    pdfFile = File(path);
     // file.writeAsBytesSync(await pdf.save());
-    await file.writeAsBytes(await pdf.save());
+    await pdfFile.writeAsBytes(await pdf.save());
+  }
+
+  Future uploadPdf() async {
+    String pdfUrl =
+        await DataBaseStorage().uploadPdf(pdfName: pdfName, pdf: pdfFile);
+    //TO get the current Date
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+    print("DDDDDDDDDDDD=$date");
+    String strDate = "$date";
+    strDate = strDate.replaceAll("00:00:00.000", "");
+    print("DDDDDDDDDDDD=$strDate");
+    Map<String, String> pdfUploadData = {
+      "report_name": pdfName,
+      "url": pdfUrl,
+      "date": strDate,
+      "office_name":
+          Provider.of<ProviderData>(context, listen: false).officeName,
+      "by": Provider.of<ProviderData>(context, listen: false).fullName,
+    };
+    await DataBase().addReportUploadData(pdfUploadData: pdfUploadData);
   }
 
   @override
@@ -255,6 +287,28 @@ class _PlayEmployeeQuestionScreenState
     officeNameController.clear();
     phoneNumberController.clear();
     super.dispose();
+  }
+
+  void _createDownloadReportFolder() async {
+    // var dir = await getApplicationDocumentsDirectory();
+    final Directory path = Directory(
+        "storage/emulated/0/center_for_food_and_drug/download/local_archive");
+
+    if ((await path.exists())) {
+      // TODO:
+      print("exist PDF Dir");
+    } else {
+      // TODO:
+      print("not exist PDF Dir");
+      path.create(recursive: true);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _createDownloadReportFolder();
+    super.initState();
   }
 
   @override
@@ -684,6 +738,8 @@ class _PlayEmployeeQuestionScreenState
                   if (employeeInfoFormKey.currentState.validate()) {
                     writeOnPdf(context);
                     await savePdf();
+
+                    await uploadPdf();
                     //to clear the last document  and update new value inside of it
                     pdf = pw.Document();
                     BotToast.showText(
@@ -735,6 +791,24 @@ class _PlayEmployeeQuestionScreenState
                               //     .controllers
                               //     .clear();
                               // pdf.
+                              Provider.of<ProviderData>(context, listen: false)
+                                  .generalEntityInfoDocumentData
+                                  .clear();
+                              Provider.of<ProviderData>(context, listen: false)
+                                  .controllers
+                                  .clear();
+
+                              Provider.of<ProviderData>(context, listen: false)
+                                  .reportInfoDocumentData
+                                  .clear();
+
+                              fullNameController.clear();
+                              emailController.clear();
+
+                              descriptionsController.clear();
+                              officeNameController.clear();
+                              phoneNumberController.clear();
+
                               Navigator.of(context).pop(true);
                               Navigator.popUntil(context,
                                   ModalRoute.withName(InstDashboardScreen.id));

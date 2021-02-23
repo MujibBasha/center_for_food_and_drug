@@ -28,7 +28,7 @@ class _LocalArchiveListScreenState extends State<LocalArchiveListScreen> {
 
     var fm = FileManager(
         root: Directory(
-            "/data/user/0/com.lightmoonstudioo.dsc_hackathon_pp/app_flutter/download/local_archive")); // any specific path you need to get specific file extensions from at as a list of file like(/storage/emulated/0/name of folder in your phone"
+            "storage/emulated/0/center_for_food_and_drug/download/local_archive")); // any specific path you need to get specific file extensions from at as a list of file like(/storage/emulated/0/name of folder in your phone"
     //TODO change to this  /data/user/0/com.lightmoonstudioo.dsc_hackathon_pp/app_flutter/download/localPDF/ specific path folder
     files = await fm.filesTree(extensions: [
       "pdf",
@@ -37,6 +37,8 @@ class _LocalArchiveListScreenState extends State<LocalArchiveListScreen> {
     setState(() {}); //update the UI
   }
 
+  ///storage/emulated/0/Android/data/com.lightmoonstudioo.center_for_food_and_drug/files
+  /////storage/emulated/0/center_for_food_and_drug/download/local_archive
   void showSnackBar({
     @required String text,
     @required SlidableAction action,
@@ -55,22 +57,35 @@ class _LocalArchiveListScreenState extends State<LocalArchiveListScreen> {
     );
   }
 
+  void _createDownloadReportFolder() async {
+    // var dir = await getApplicationDocumentsDirectory();
+    final Directory path = Directory(
+        "storage/emulated/0/center_for_food_and_drug/download/local_archive");
+
+    if ((await path.exists())) {
+      // TODO:
+      print("exist PDF Dir");
+    } else {
+      // TODO:
+      print("not exist PDF Dir");
+      path.create(recursive: true);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+    _createDownloadReportFolder();
+    getFiles();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Local Archives"),
-        centerTitle: true,
-      ),
+    return Container(
       // key: scaffoldAddMembersScreen,
-      backgroundColor: Color(0XFF111b47), //0XFF0A0E21
-      body: ListView.builder(
+      //0XFF0A0E21
+      child: ListView.builder(
         //if file/folder list is grabbed, then show here
         itemCount: files?.length ?? 0,
         itemBuilder: (context, index) {

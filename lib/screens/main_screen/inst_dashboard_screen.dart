@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:center_for_food_and_drug/components/login_registration_components/item_of_list.dart';
 import 'package:center_for_food_and_drug/constants.dart';
 import 'package:center_for_food_and_drug/localization/localization_constants.dart';
+import 'package:center_for_food_and_drug/screens/main_screen/archive_screen.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/check_list_screen.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/global_archive_list_screen.dart';
 
@@ -74,8 +76,24 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
     });
   }
 
+  void _createDownloadReportFolder() async {
+    // var dir = await getApplicationDocumentsDirectory();
+    final Directory path = Directory(
+        "storage/emulated/0/center_for_food_and_drug/download/local_archive");
+
+    if ((await path.exists())) {
+      // TODO:
+      print("exist PDF Dir");
+    } else {
+      // TODO:
+      print("not exist PDF Dir");
+      path.create(recursive: true);
+    }
+  }
+
   @override
   void initState() {
+    _createDownloadReportFolder();
     getUserInfo();
     super.initState();
 
@@ -171,7 +189,7 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                             onPressed: () =>
                                 scaffoldDashboardKey.currentState.openDrawer(),
                             child: Image.asset(
-                              "assets/newImages/menu.png",
+                              "assets/images/menu.png",
                             ),
                           ),
                         ),
@@ -349,8 +367,7 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            GlobalArchiveListScreen(),
+                                        builder: (context) => ArchivesScreen(),
                                       ),
                                     );
                                     // showSnackBar(

@@ -182,20 +182,22 @@ class _ItemOfReportListState extends State<ItemOfReportList> {
                           style: TextStyle(color: Colors.grey[700])),
                       padding: EdgeInsets.only(top: 3, bottom: 2),
                     ),
-                    Row(children: [
-                      Padding(
-                        child: Text("${widget.date}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey[500])),
-                        padding: EdgeInsets.only(bottom: 3),
-                      ),
-                      Padding(
-                        child: Text("office :${widget.officeName}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey[500])),
-                        padding: EdgeInsets.only(bottom: 3, left: 5),
-                      ),
-                    ])
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            child: Text("${widget.date}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.grey[500])),
+                            padding: EdgeInsets.only(bottom: 3),
+                          ),
+                          Padding(
+                            child: Text("office: ${widget.officeName}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.grey[500])),
+                            padding: EdgeInsets.only(bottom: 3, left: 5),
+                          ),
+                        ])
                   ],
                 ),
               ),

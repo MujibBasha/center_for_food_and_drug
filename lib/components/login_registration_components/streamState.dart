@@ -58,6 +58,9 @@ class _EntitiesStreamStateState extends State<EntitiesStreamState> {
               onPressed: () {
                 //TODO send this url to pdf viewer
                 //snapshot.data.docs[index].get("url") ,
+                Provider.of<ProviderData>(context, listen: false)
+                        .currentEntityName =
+                    snapshot.data.docs[index].get("entity_type");
                 Navigator.push(
                   context,
                   MaterialPageRoute(

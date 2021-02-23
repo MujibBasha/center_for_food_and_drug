@@ -21,11 +21,11 @@ class _ItemOfLocalContentState extends State<ItemOfLocalContent> {
             title: Text(widget.currentFile.path.split('/').last),
             leading: Icon(
               Icons.picture_as_pdf,
-              color: Color(0xffEB1555),
+              color: Colors.lightBlueAccent,
             ),
             trailing: Icon(
               Icons.arrow_forward,
-              color: Color(0xffEB1555),
+              color: Colors.lightBlueAccent,
             ),
             onTap: () {
               // File f=File("dsd/sd/sd/sdds.pdf");

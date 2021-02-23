@@ -124,34 +124,45 @@ class DataBase {
         .snapshots();
   }
 
-  getSpecializationListStream({String collageName, String sectionName}) async* {
-    print("________________________");
+  addReportUploadData({Map pdfUploadData}) async {
+    //TODO
+    print("+++++++++++++++++++++");
     await Firebase.initializeApp();
-    yield* FirebaseFirestore.instance
-        .collection("collage")
-        .doc(collageName)
-        .collection("section")
-        .doc(sectionName)
-        .collection("specialization")
-        .snapshots();
+    FirebaseFirestore.instance
+        .collection("LY_FDA")
+        .doc("LY_FDA")
+        .collection("archives")
+        .add(pdfUploadData);
   }
+  //
+  // getSpecializationListStream({String collageName, String sectionName}) async* {
+  //   print("________________________");
+  //   await Firebase.initializeApp();
+  //   yield* FirebaseFirestore.instance
+  //       .collection("collage")
+  //       .doc(collageName)
+  //       .collection("section")
+  //       .doc(sectionName)
+  //       .collection("specialization")
+  //       .snapshots();
+  // }
 
-  getSemesterListStream(
-      {@required String collageName,
-      @required String sectionName,
-      @required String specializationName}) async* {
-    print("________________________");
-    await Firebase.initializeApp();
-    yield* FirebaseFirestore.instance
-        .collection("collage")
-        .doc(collageName)
-        .collection("section")
-        .doc(sectionName)
-        .collection("specialization")
-        .doc(specializationName)
-        .collection("semester")
-        .snapshots();
-  }
+  // getSemesterListStream(
+  //     {@required String collageName,
+  //     @required String sectionName,
+  //     @required String specializationName}) async* {
+  //   print("________________________");
+  //   await Firebase.initializeApp();
+  //   yield* FirebaseFirestore.instance
+  //       .collection("collage")
+  //       .doc(collageName)
+  //       .collection("section")
+  //       .doc(sectionName)
+  //       .collection("specialization")
+  //       .doc(specializationName)
+  //       .collection("semester")
+  //       .snapshots();
+  // }
 
   // getBooksContentListStream(
   //     {@required String collageName,
@@ -174,82 +185,82 @@ class DataBase {
   //       .collection("books")
   //       .snapshots();
   // }
+  //
+  // getContentListStream(
+  //     {@required String collageName,
+  //     @required String sectionName,
+  //     @required String specializationName,
+  //     @required String semesterIndex,
+  //     @required String courseBy,
+  //     @required String sectionType,
+  //     @required String contentType}) async* {
+  //   print("_____________uuuuuu___________");
+  //   await Firebase.initializeApp();
+  //   yield* FirebaseFirestore.instance
+  //       .collection("collage")
+  //       .doc(collageName)
+  //       .collection("section")
+  //       .doc(sectionName)
+  //       .collection("specialization")
+  //       .doc(specializationName)
+  //       .collection("semester")
+  //       .doc(semesterIndex)
+  //       .collection("content")
+  //       .doc("content")
+  //       .collection(contentType)
+  //       .doc(courseBy)
+  //       .collection(sectionType)
+  //       .snapshots();
+  // }
+  //
+  // getCurrentCoursesListStream(
+  //     {@required String collageName,
+  //     @required String sectionName,
+  //     @required String specializationName,
+  //     @required String semesterIndex,
+  //     @required String contentType}) async* {
+  //   print("_____________uuuuuu___________");
+  //   await Firebase.initializeApp();
+  //   yield* FirebaseFirestore.instance
+  //       .collection("collage")
+  //       .doc(collageName)
+  //       .collection("section")
+  //       .doc(sectionName)
+  //       .collection("specialization")
+  //       .doc(specializationName)
+  //       .collection("semester")
+  //       .doc(semesterIndex)
+  //       .collection("content")
+  //       .doc("content")
+  //       .collection(contentType)
+  //       .snapshots();
+  // }
 
-  getContentListStream(
-      {@required String collageName,
-      @required String sectionName,
-      @required String specializationName,
-      @required String semesterIndex,
-      @required String courseBy,
-      @required String sectionType,
-      @required String contentType}) async* {
-    print("_____________uuuuuu___________");
-    await Firebase.initializeApp();
-    yield* FirebaseFirestore.instance
-        .collection("collage")
-        .doc(collageName)
-        .collection("section")
-        .doc(sectionName)
-        .collection("specialization")
-        .doc(specializationName)
-        .collection("semester")
-        .doc(semesterIndex)
-        .collection("content")
-        .doc("content")
-        .collection(contentType)
-        .doc(courseBy)
-        .collection(sectionType)
-        .snapshots();
-  }
-
-  getCurrentCoursesListStream(
-      {@required String collageName,
-      @required String sectionName,
-      @required String specializationName,
-      @required String semesterIndex,
-      @required String contentType}) async* {
-    print("_____________uuuuuu___________");
-    await Firebase.initializeApp();
-    yield* FirebaseFirestore.instance
-        .collection("collage")
-        .doc(collageName)
-        .collection("section")
-        .doc(sectionName)
-        .collection("specialization")
-        .doc(specializationName)
-        .collection("semester")
-        .doc(semesterIndex)
-        .collection("content")
-        .doc("content")
-        .collection(contentType)
-        .snapshots();
-  }
-
-  Future<bool> addData({
-    @required dataType,
-    @required Map data,
-  }) async {
-    await Firebase.initializeApp();
-    var value = await FirebaseFirestore.instance.collection(dataType).add(data);
-    if (value != null) {
-      return Future.value(true);
-    } else {
-      return Future.value(false);
-    }
-
-    return Future.value(false);
-  }
-
-  Future addImageInfo({Map data}) async {
-    var value = await FirebaseFirestore.instance
-        .collection("uploadPapersInfo")
-        .add(data);
-    if (value != null) {
-      return Future.value(true);
-    } else {
-      return Future.value(false);
-    }
-  }
+  // Future<bool> addData({
+  //   @required dataType,
+  //   @required Map data,
+  // }) async {
+  //   await Firebase.initializeApp();
+  //   var value = await FirebaseFirestore.instance.collection(dataType).add(data);
+  //   if (value != null) {
+  //     return Future.value(true);
+  //   } else {
+  //     return Future.value(false);
+  //   }
+  //
+  //   return Future.value(false);
+  // }
+//
+//   Future addImageInfo({Map data}) async {
+//     var value = await FirebaseFirestore.instance
+//         .collection("uploadPapersInfo")
+//         .add(data);
+//     if (value != null) {
+//       return Future.value(true);
+//     } else {
+//       return Future.value(false);
+//     }
+//   }
 }
 
 class DataBaseStorage {
@@ -261,18 +272,32 @@ class DataBaseStorage {
         .getDownloadURL();
   }
 
-  Future uploadImage({File image, String imageName}) async {
+  // Future uploadImage({File image, String imageName}) async {
+  //   await Firebase.initializeApp();
+  //   print(
+  //       "IIIIIIIIIIIIIMMMMMMMMMMMMMMMMMAAAAAAAAAAAAAAGGGGGGWWWWWWWW +++++++++++===========$imageName");
+  //   StorageReference imagePathRef = FirebaseStorage.instance
+  //       .ref()
+  //       .child("/Upload_Images/exams_papers/")
+  //       .child(imageName);
+  //   StorageUploadTask task = imagePathRef.putFile(image);
+  //   var imageURL = await (await task.onComplete).ref.getDownloadURL();
+  //   print(" +++++++++++===========$imageURL");
+  //   return imageURL.toString();
+  // }
+
+  Future uploadPdf({File pdf, String pdfName}) async {
     await Firebase.initializeApp();
-    print(
-        "IIIIIIIIIIIIIMMMMMMMMMMMMMMMMMAAAAAAAAAAAAAAGGGGGGWWWWWWWW +++++++++++===========$imageName");
-    StorageReference imagePathRef = FirebaseStorage.instance
+    // print(
+    //     "IIIIIIIIIIIIIMMMMMMMMMMMMMMMMMAAAAAAAAAAAAAAGGGGGGWWWWWWWW +++++++++++===========$imageName");
+    StorageReference pdfPathRef = FirebaseStorage.instance
         .ref()
-        .child("/Upload_Images/exams_papers/")
-        .child(imageName);
-    StorageUploadTask task = imagePathRef.putFile(image);
-    var imageURL = await (await task.onComplete).ref.getDownloadURL();
-    print(" +++++++++++===========$imageURL");
-    return imageURL.toString();
+        .child("/Upload_Archives/")
+        .child(pdfName);
+    StorageUploadTask task = pdfPathRef.putFile(pdf);
+    var pdfURL = await (await task.onComplete).ref.getDownloadURL();
+    print(" +++++++++++===========$pdfURL");
+    return pdfURL.toString();
   }
 
   // Future uploadImage({File image,String imageName}) async{
