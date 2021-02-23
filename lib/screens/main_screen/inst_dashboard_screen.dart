@@ -4,6 +4,7 @@ import 'package:center_for_food_and_drug/components/login_registration_component
 import 'package:center_for_food_and_drug/constants.dart';
 import 'package:center_for_food_and_drug/localization/localization_constants.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/check_list_screen.dart';
+import 'package:center_for_food_and_drug/screens/main_screen/global_archive_list_screen.dart';
 
 import 'package:center_for_food_and_drug/service/database.dart';
 import 'package:center_for_food_and_drug/tasks_provider/provider_data.dart';
@@ -23,6 +24,7 @@ class InstDashboardScreen extends StatefulWidget {
 class _InstDashboardScreenState extends State<InstDashboardScreen> {
   DocumentSnapshot userInfo;
 
+  final scaffoldDashboardKey = GlobalKey<ScaffoldState>();
   void showSnackBar({String text}) {
     // ignore: deprecated_member_use
     Scaffold.of(context).showSnackBar(
@@ -89,6 +91,7 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        key: scaffoldDashboardKey,
         drawer: Drawer(),
         body: Column(children: [
           Container(
@@ -107,16 +110,68 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                     height: 64,
                     // margin: EdgeInsets.only(bottom: 10),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
+                        // Container(
+                        //   height: 90,
+                        //   width: 90,
+                        //   // alignment: Alignment.center,
+                        //   child: BoomMenu(
+                        //     fabAlignment: Alignment.centerLeft,
+                        //     animatedIcon: AnimatedIcons.menu_close,
+                        //     animatedIconTheme: IconThemeData(size: 22.0),
+                        //     //child: Icon(Icons.add),
+                        //     marginBottom: 10,
+                        //     // child: Container(
+                        //     //   width: 70,
+                        //     //   height: 70,
+                        //     // ),
+                        //     onOpen: () => print('OPENING DIAL'),
+                        //     onClose: () => print('DIAL CLOSED'),
+                        //     scrollVisible: scrollVisible,
+                        //     overlayColor: Colors.black,
+                        //     overlayOpacity: 0.7,
+                        //     children: [
+                        //       MenuItem(
+                        //         child: Icon(Icons.person_rounded,
+                        //             color: Colors.black),
+                        //         title: "Profiles",
+                        //         titleColor: Colors.white,
+                        //         subtitle: "go to your profile page",
+                        //         subTitleColor: Colors.white,
+                        //         backgroundColor: Colors.blue,
+                        //         onTap: () => print('FIRST CHILD'),
+                        //       ),
+                        //       MenuItem(
+                        //         child: Icon(Icons.contact_support_outlined,
+                        //             color: Colors.black),
+                        //         title: "support",
+                        //         titleColor: Colors.white,
+                        //         subtitle: "connect with us",
+                        //         subTitleColor: Colors.white,
+                        //         backgroundColor: Colors.green,
+                        //         onTap: () => print('SECOND CHILD'),
+                        //       ),
+                        //       MenuItem(
+                        //         child: Icon(Icons.logout, color: Colors.black),
+                        //         title: "Log out",
+                        //         titleColor: Colors.white,
+                        //         subtitle: "connect with us",
+                        //         subTitleColor: Colors.white,
+                        //         backgroundColor: Colors.redAccent,
+                        //         onTap: () => print('SECOND CHILD'),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         Container(
                           height: 70,
                           width: 70,
                           child: FlatButton(
-                            onPressed:
-                                () {}, //=> widget.scaffoldSashKey.currentState.openDrawer(),
+                            onPressed: () =>
+                                scaffoldDashboardKey.currentState.openDrawer(),
                             child: Image.asset(
-                              "assets/images/menu.png",
+                              "assets/newImages/menu.png",
                             ),
                           ),
                         ),
@@ -291,12 +346,19 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 0.0),
                                   onPressed: () {
-                                    showSnackBar(
-                                      text: getTranslated(
-                                          context: context,
-                                          key: "unavailable_item",
-                                          typeScreen: "general_content"),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            GlobalArchiveListScreen(),
+                                      ),
                                     );
+                                    // showSnackBar(
+                                    //   text: getTranslated(
+                                    //       context: context,
+                                    //       key: "unavailable_item",
+                                    //       typeScreen: "general_content"),
+                                    // );
                                   },
                                   child: Container(
                                     height: 200,
@@ -318,7 +380,8 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                           height: 3,
                                         ),
                                         Text(
-                                          "All Check",
+                                          "Archives",
+                                          //"All Check",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 20,
@@ -410,50 +473,7 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                 ),
           ),
         ]),
-        floatingActionButton: BoomMenu(
-          animatedIcon: AnimatedIcons.menu_close,
-          animatedIconTheme: IconThemeData(size: 22.0),
-          //child: Icon(Icons.add),
-          marginBottom: 10,
-          // child: Container(
-          //   width: 70,
-          //   height: 70,
-          // ),
-          onOpen: () => print('OPENING DIAL'),
-          onClose: () => print('DIAL CLOSED'),
-          scrollVisible: scrollVisible,
-          overlayColor: Colors.black,
-          overlayOpacity: 0.7,
-          children: [
-            MenuItem(
-              child: Icon(Icons.person_rounded, color: Colors.black),
-              title: "Profiles",
-              titleColor: Colors.white,
-              subtitle: "go to your profile page",
-              subTitleColor: Colors.white,
-              backgroundColor: Colors.blue,
-              onTap: () => print('FIRST CHILD'),
-            ),
-            MenuItem(
-              child: Icon(Icons.contact_support_outlined, color: Colors.black),
-              title: "support",
-              titleColor: Colors.white,
-              subtitle: "connect with us",
-              subTitleColor: Colors.white,
-              backgroundColor: Colors.green,
-              onTap: () => print('SECOND CHILD'),
-            ),
-            MenuItem(
-              child: Icon(Icons.logout, color: Colors.black),
-              title: "Log out",
-              titleColor: Colors.white,
-              subtitle: "connect with us",
-              subTitleColor: Colors.white,
-              backgroundColor: Colors.redAccent,
-              onTap: () => print('SECOND CHILD'),
-            ),
-          ],
-        ),
+        // floatingActionButton: ,
       ),
     );
   }

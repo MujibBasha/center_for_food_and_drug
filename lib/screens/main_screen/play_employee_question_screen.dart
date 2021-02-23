@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:center_for_food_and_drug/localization/localization_constants.dart';
+import 'package:center_for_food_and_drug/screens/main_screen/inst_dashboard_screen.dart';
 import 'package:center_for_food_and_drug/tasks_provider/provider_data.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -13,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:provider/provider.dart';
+import 'package:bot_toast/bot_toast.dart';
 
 const kPrimaryColor = Colors.lightBlueAccent;
 const kPrimaryLightColor = Color(0xFFF1E6FF);
@@ -61,8 +63,11 @@ class _PlayEmployeeQuestionScreenState
     });
   }
 
-  final pdf = pw.Document();
-
+  pw.Document pdf = pw.Document();
+  // final PdfImage assetImage = await pdfImageFromImageProvider(
+  // pdf: pdf.document,
+  // image: const AssetImage('assets/test.jpg'),
+  // );
   // final image = pw.ImageProvider(
   //   pw.ImageProvider("PdfLogo.png"),
   // );
@@ -118,7 +123,40 @@ class _PlayEmployeeQuestionScreenState
                     ])),
             pw.Header(level: 1, text: 'General Info About Entity'),
             pw.ListView.builder(
-                itemCount: 6,
+                itemCount: Provider.of<ProviderData>(con, listen: false)
+                    .generalEntityInfoDocumentData
+                    .length,
+                itemBuilder: (pw.Context pwContext, index) {
+                  print("start_wirte PDF listview.builder");
+                  return pw.Container(
+                      padding: pw.EdgeInsets.all(10),
+                      child: pw.Column(
+                          mainAxisAlignment: pw.MainAxisAlignment.start,
+                          children: <pw.Widget>[
+                            pw.Header(
+                                level: 2,
+                                text: Provider.of<ProviderData>(con,
+                                            listen: false)
+                                        .generalEntityInfoDocumentData[index]
+                                    ["question"],
+                                textStyle: pw.TextStyle(fontSize: 18)),
+                            pw.Header(
+                                level: 3,
+                                text: Provider.of<ProviderData>(con,
+                                            listen: false)
+                                        .generalEntityInfoDocumentData[index]
+                                    ["answer"],
+                                textStyle: pw.TextStyle(
+                                    fontSize: 16, color: PdfColors.grey)),
+                          ]));
+                }),
+            pw.SizedBox(height: 40),
+            pw.Header(level: 1, text: ''),
+            pw.Header(level: 1, text: 'Report Information'),
+            pw.ListView.builder(
+                itemCount: Provider.of<ProviderData>(con, listen: false)
+                    .reportInfoDocumentData
+                    .length,
                 itemBuilder: (pw.Context pwContext, index) {
                   print("start_wirte PDF listview.builder");
                   return pw.Container(
@@ -130,14 +168,67 @@ class _PlayEmployeeQuestionScreenState
                                 level: 2,
                                 text: Provider.of<ProviderData>(con,
                                         listen: false)
-                                    .documentData[index]["question"]),
+                                    .reportInfoDocumentData[index]["question"],
+                                textStyle: pw.TextStyle(fontSize: 18)),
                             pw.Header(
                                 level: 3,
                                 text: Provider.of<ProviderData>(con,
                                         listen: false)
-                                    .documentData[index]["answer"]),
+                                    .reportInfoDocumentData[index]["answer"],
+                                textStyle: pw.TextStyle(
+                                    fontSize: 16, color: PdfColors.grey)),
                           ]));
                 }),
+
+            //printing employee information
+            pw.Header(level: 1, text: 'Employee Information'),
+
+            pw.Row(children: [
+              pw.Header(
+                  level: 2,
+                  text: "FullName: ",
+                  textStyle: pw.TextStyle(fontSize: 18)),
+              pw.Header(
+                  level: 3,
+                  text: fullNameController.text,
+                  textStyle: pw.TextStyle(fontSize: 16, color: PdfColors.grey)),
+            ]),
+            pw.Row(children: [
+              pw.Header(
+                  level: 2,
+                  text: "Email: ",
+                  textStyle: pw.TextStyle(fontSize: 18)),
+              pw.Header(
+                  level: 3,
+                  text: emailController.text,
+                  textStyle: pw.TextStyle(fontSize: 16, color: PdfColors.grey)),
+            ]),
+
+            pw.Row(children: [
+              pw.Header(
+                  level: 2,
+                  text: "PhoneNumber: ",
+                  textStyle: pw.TextStyle(fontSize: 18)),
+              pw.Header(
+                  level: 3,
+                  text: phoneNumberController.text,
+                  textStyle: pw.TextStyle(fontSize: 16, color: PdfColors.grey)),
+            ]),
+            pw.Row(children: [
+              pw.Header(
+                  level: 2,
+                  text: "Office Name: ",
+                  textStyle: pw.TextStyle(fontSize: 18)),
+              pw.Header(
+                  level: 3,
+                  text: officeNameController.text,
+                  textStyle: pw.TextStyle(fontSize: 16, color: PdfColors.grey)),
+            ]),
+            pw.SizedBox(height: 20),
+            pw.Header(level: 1, text: 'Note From Employee'),
+            pw.Paragraph(
+              text: descriptionsController.text,
+            )
           ];
         }));
   }
@@ -152,6 +243,18 @@ class _PlayEmployeeQuestionScreenState
     File file = File(path);
     // file.writeAsBytesSync(await pdf.save());
     await file.writeAsBytes(await pdf.save());
+  }
+
+  @override
+  void dispose() {
+    print("dispose of employee");
+    fullNameController.clear();
+    emailController.clear();
+
+    descriptionsController.clear();
+    officeNameController.clear();
+    phoneNumberController.clear();
+    super.dispose();
   }
 
   @override
@@ -581,6 +684,86 @@ class _PlayEmployeeQuestionScreenState
                   if (employeeInfoFormKey.currentState.validate()) {
                     writeOnPdf(context);
                     await savePdf();
+                    //to clear the last document  and update new value inside of it
+                    pdf = pw.Document();
+                    BotToast.showText(
+                        text: "The Report Saved Successfully",
+                        contentColor: Colors.lightBlueAccent);
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Text(
+                          getTranslated(
+                              context: context,
+                              key: "main_text",
+                              typeScreen: "WillPopScope_content"),
+                          style: TextStyle(color: Colors.pink),
+                        ),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Back To Dashboard ?",
+                              // getTranslated(
+                              //     context: context,
+                              //     key: "body_question_text",
+                              //     typeScreen: "WillPopScope_content"),
+                              //"GO TO"
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            // Text(
+                            //   "you will lose the current data",
+                            //   // getTranslated(
+                            //   //     context: context,
+                            //   //     key: "close_app_hint",
+                            //   //     typeScreen: "WillPopScope_content"),
+                            //   style: TextStyle(
+                            //     color: Colors.white,
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                        actions: [
+                          FlatButton(
+                            onPressed: () async {
+                              // Provider.of<ProviderData>(context, listen: false)
+                              //     .documentData
+                              //     .clear();
+                              // Provider.of<ProviderData>(context, listen: false)
+                              //     .controllers
+                              //     .clear();
+                              // pdf.
+                              Navigator.of(context).pop(true);
+                              Navigator.popUntil(context,
+                                  ModalRoute.withName(InstDashboardScreen.id));
+                            },
+                            child: Text(
+                              getTranslated(
+                                  context: context,
+                                  key: "yes_button",
+                                  typeScreen: "WillPopScope_content"),
+                              style: TextStyle(color: Colors.pink),
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(false);
+                            },
+                            child: Text(
+                              getTranslated(
+                                  context: context,
+                                  key: "no_button",
+                                  typeScreen: "WillPopScope_content"),
+                              style: TextStyle(color: Colors.pink),
+                            ),
+                          ),
+                        ],
+                        backgroundColor: Color(0xff0A0E21),
+                      ),
+                    );
+
                     print("SSSSSSSSSSSSsss");
                     // Map<String, Object> data = {
                     // "subject": phoneNumberController.text ?? "null",

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:center_for_food_and_drug/components/login_registration_components/streamState.dart';
 import 'package:center_for_food_and_drug/localization/localization_constants.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/play_question_select_screen.dart';
@@ -14,6 +15,16 @@ class PlayQuestionFieldScreen extends StatefulWidget {
 }
 
 class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
+  @override
+  void dispose() {
+    print("dispose of field");
+    Provider.of<ProviderData>(context, listen: false)
+        .generalEntityInfoDocumentData
+        .clear();
+    Provider.of<ProviderData>(context, listen: false).controllers.clear();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -59,7 +70,7 @@ class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
                 onPressed: () async {
                   Navigator.of(context).pop(true);
                   Provider.of<ProviderData>(context, listen: false)
-                      .documentData
+                      .generalEntityInfoDocumentData
                       .clear();
                   Provider.of<ProviderData>(context, listen: false)
                       .controllers
@@ -153,21 +164,11 @@ class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
           backgroundColor: Colors.blue,
           child: Icon(Icons.navigate_next_outlined, color: Colors.white),
           onPressed: () {
-            // //TODO add ability to upload image to firebase from user and add this image inside the app by manager
-            // print(
-            //     ">>>>>>>>${Provider.of<ProviderData>(context, listen: false).documentData.length}");
-            // for (dynamic item in Provider.of<ProviderData>(context, listen: false)
-            //     .documentData) {
-            //   print("item:$item");
-            //   Provider.of<ProviderData>(context, listen: false).page_0.add(
-            //     {"question": item["question"], "answer": item["answer"].text},
-            //   );
-            // }
-            // print(Provider.of<ProviderData>(context, listen: false)
-            //     .page_0); //Provider.of<ProviderData>(context, listen: false).page_0
             FocusScope.of(context).unfocus();
-            print(
-                Provider.of<ProviderData>(context, listen: false).documentData);
+            BotToast.showText(
+                text: "Saved", contentColor: Colors.lightBlueAccent);
+            print(Provider.of<ProviderData>(context, listen: false)
+                .generalEntityInfoDocumentData);
             Navigator.push(
               context,
               MaterialPageRoute(

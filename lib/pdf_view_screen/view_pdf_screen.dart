@@ -233,28 +233,41 @@ class _ViewPdfScreenState extends State<ViewPdfScreen> {
 
                     if (status.isGranted) {
                       // Download PDF inside specific folder
-                      setState(() {
-                        downloadButtonAnimation = true;
-                      });
-                      var dir = await getApplicationDocumentsDirectory();
-                      String pdfName = widget.bookName;
-                      pdfName = pdfName.replaceAll(" ", "_");
-
-                      // print("dir=$dir");
-                      // print("dirPAth=${dir.path}");
-                      print("${dir.path}/download/localPDF/$pdfName.pdf");
-                      pdfFile =
-                          File("${dir.path}/download/localPDF/$pdfName.pdf");
-
-                      pdfFile = await pdfFile.writeAsBytes(
-                          Provider.of<ProviderData>(context, listen: false)
-                              .pdfFileByte,
-                          flush: true);
-
-                      setState(() {
-                        downloadButtonAnimation = false;
-                      });
-                      showSnackBar();
+                      // setState(() {
+                      //   downloadButtonAnimation = true;
+                      // });
+                      // var dir = await getApplicationDocumentsDirectory();
+                      // String pdfName = widget.bookName;
+                      // pdfName = pdfName.replaceAll(" ", "_");
+                      //
+                      // // print("dir=$dir");
+                      // // print("dirPAth=${dir.path}");
+                      // print("${dir.path}/download/localPDF/$pdfName.pdf");
+                      // pdfFile =
+                      //     File("${dir.path}/download/localPDF/$pdfName.pdf");
+                      //
+                      // pdfFile = await pdfFile.writeAsBytes(
+                      //     Provider.of<ProviderData>(context, listen: false)
+                      //         .pdfFileByte,
+                      //     flush: true);
+                      //
+                      // setState(() {
+                      //   downloadButtonAnimation = false;
+                      // });
+                      // showSnackBar();
+                      // ignore: deprecated_member_use
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "this item not available yet",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          backgroundColor: Colors.blueAccent,
+                        ),
+                      );
                     } else {
                       // ignore: deprecated_member_use
                       Scaffold.of(context).showSnackBar(

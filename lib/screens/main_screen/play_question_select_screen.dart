@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:center_for_food_and_drug/components/login_registration_components/streamState.dart';
 import 'package:center_for_food_and_drug/localization/localization_constants.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/paly_question_field_screen.dart';
@@ -16,6 +17,16 @@ class PlayQuestionSelectScreen extends StatefulWidget {
 
 class _PlayQuestionSelectScreenState extends State<PlayQuestionSelectScreen> {
   bool giaeSection = true;
+
+  @override
+  void dispose() {
+    print("dispose of select");
+    Provider.of<ProviderData>(context, listen: false)
+        .reportInfoDocumentData
+        .clear();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -58,16 +69,17 @@ class _PlayQuestionSelectScreenState extends State<PlayQuestionSelectScreen> {
             actions: [
               FlatButton(
                 onPressed: () async {
-                  int end = Provider.of<ProviderData>(context, listen: false)
-                      .documentData
-                      .length;
-                  int start = Provider.of<ProviderData>(context, listen: false)
-                      .questionStored;
-
-                  Navigator.of(context).pop(true);
+                  // int end = Provider.of<ProviderData>(context, listen: false)
+                  //     .reportInfoDocumentData
+                  //     .length;
+                  // int start = Provider.of<ProviderData>(context, listen: false)
+                  //     .questionStored;
                   Provider.of<ProviderData>(context, listen: false)
-                      .documentData
-                      .removeRange(start, end);
+                      .reportInfoDocumentData
+                      .clear();
+                  Navigator.of(context).pop(true);
+
+                  // .removeRange(start, end);
                 },
                 child: Text(
                   getTranslated(
@@ -154,8 +166,13 @@ class _PlayQuestionSelectScreenState extends State<PlayQuestionSelectScreen> {
           onPressed: () {
             FocusScope.of(context).unfocus();
             //TODO add ability to upload image to firebase from user and add this image inside the app by manager
-            print(
-                Provider.of<ProviderData>(context, listen: false).documentData);
+            print(Provider.of<ProviderData>(context, listen: false)
+                .generalEntityInfoDocumentData);
+            print("second document");
+            print(Provider.of<ProviderData>(context, listen: false)
+                .reportInfoDocumentData);
+            BotToast.showText(
+                text: "Saved", contentColor: Colors.lightBlueAccent);
             Navigator.push(
               context,
               MaterialPageRoute(

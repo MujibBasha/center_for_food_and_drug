@@ -118,9 +118,9 @@ class DataBase {
     print("+++++++++++++++++++++");
     await Firebase.initializeApp();
     yield* FirebaseFirestore.instance
-        .collection("administrative_control")
-        .doc("administrative_control")
-        .collection("reports")
+        .collection("LY_FDA")
+        .doc("LY_FDA")
+        .collection("archives")
         .snapshots();
   }
 

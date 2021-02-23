@@ -26,10 +26,11 @@ class _QuestionFormTileWidgetState extends State<QuestionFormTileWidget> {
         .add(TextEditingController());
     //add new section for anew question
     Provider.of<ProviderData>(context, listen: false)
-        .documentData
+        .generalEntityInfoDocumentData
         .add({"question": "null", "answer": "null"});
     Provider.of<ProviderData>(context, listen: false)
-        .documentData[widget.currentIndex]["question"] = widget.questionTitle;
+            .generalEntityInfoDocumentData[widget.currentIndex]["question"] =
+        widget.questionTitle;
 
     super.initState();
   }
@@ -54,7 +55,8 @@ class _QuestionFormTileWidgetState extends State<QuestionFormTileWidget> {
                   .controllers[widget.currentIndex],
               onChange: (String currentText) {
                 Provider.of<ProviderData>(context, listen: false)
-                    .documentData[widget.currentIndex]["answer"] = currentText;
+                        .generalEntityInfoDocumentData[widget.currentIndex]
+                    ["answer"] = currentText;
               },
             ),
             SizedBox(
@@ -114,10 +116,10 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
   void initState() {
     // TODO: implement initState
     Provider.of<ProviderData>(context, listen: false)
-        .documentData
+        .reportInfoDocumentData
         .add({"question": "null", "answer": "null"});
     Provider.of<ProviderData>(context, listen: false)
-            .documentData[widget.currentIndex]["question"] =
+            .reportInfoDocumentData[widget.currentIndex]["question"] =
         widget.querySnapshot.get("question");
     super.initState();
     print("currrrrererrererere ]]]]]>${widget.currentIndex}");
@@ -158,11 +160,11 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
                 //     widget.querySnapshot.get("question"); // Provider.of<ProviderData>(context, listen: false).formData
 
                 Provider.of<ProviderData>(context, listen: false)
-                        .documentData[widget.currentIndex]["question"] =
-                    widget.querySnapshot.get("question");
+                        .reportInfoDocumentData[widget.currentIndex]
+                    ["question"] = widget.querySnapshot.get("question");
 
                 Provider.of<ProviderData>(context, listen: false)
-                        .documentData[widget.currentIndex]["answer"] =
+                        .reportInfoDocumentData[widget.currentIndex]["answer"] =
                     optionSelected;
 
                 //Send this to provider TODO
@@ -182,11 +184,11 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
                 //         .page_1[widget.currentIndex]["question"] =
                 //     widget.querySnapshot.get("question");
                 Provider.of<ProviderData>(context, listen: false)
-                        .documentData[widget.currentIndex]["question"] =
-                    widget.querySnapshot.get("question");
+                        .reportInfoDocumentData[widget.currentIndex]
+                    ["question"] = widget.querySnapshot.get("question");
 
                 Provider.of<ProviderData>(context, listen: false)
-                        .documentData[widget.currentIndex]["answer"] =
+                        .reportInfoDocumentData[widget.currentIndex]["answer"] =
                     optionSelected;
               });
             },
@@ -204,11 +206,11 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
                 //         .page_1[widget.currentIndex]["question"] =
                 //     widget.querySnapshot.get("question");
                 Provider.of<ProviderData>(context, listen: false)
-                        .documentData[widget.currentIndex]["question"] =
-                    widget.querySnapshot.get("question");
+                        .reportInfoDocumentData[widget.currentIndex]
+                    ["question"] = widget.querySnapshot.get("question");
 
                 Provider.of<ProviderData>(context, listen: false)
-                        .documentData[widget.currentIndex]["answer"] =
+                        .reportInfoDocumentData[widget.currentIndex]["answer"] =
                     optionSelected;
               });
             },
@@ -226,11 +228,11 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
                 //         .page_1[widget.currentIndex]["question"] =
                 //     widget.querySnapshot.get("question");
                 Provider.of<ProviderData>(context, listen: false)
-                        .documentData[widget.currentIndex]["question"] =
-                    widget.querySnapshot.get("question");
+                        .reportInfoDocumentData[widget.currentIndex]
+                    ["question"] = widget.querySnapshot.get("question");
 
                 Provider.of<ProviderData>(context, listen: false)
-                        .documentData[widget.currentIndex]["answer"] =
+                        .reportInfoDocumentData[widget.currentIndex]["answer"] =
                     optionSelected;
               });
             },

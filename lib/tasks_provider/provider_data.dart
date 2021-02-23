@@ -15,9 +15,11 @@ class ProviderData extends ChangeNotifier {
   String idNumber = "";
 
   List<TextEditingController> controllers = [];
-  List<Map<String, String>> documentData = [
+  List<Map<String, String>> generalEntityInfoDocumentData = [
     // {"textField":"null", "question": null""},
   ];
+
+  List<Map<String, String>> reportInfoDocumentData = [];
   int totalCurrentQuestion = 00;
   int questionStored = 0;
 

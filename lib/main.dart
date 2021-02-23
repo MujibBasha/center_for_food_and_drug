@@ -7,6 +7,7 @@ import 'package:center_for_food_and_drug/tasks_provider/provider_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:bot_toast/bot_toast.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -18,6 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: BotToastInit(), //1. call BotToastInit
+      navigatorObservers: [BotToastNavigatorObserver()],
       routes: {
         InstDashboardScreen.id: (context) => InstDashboardScreen(),
       },

@@ -68,6 +68,8 @@ dependencies:
 
   ##this section for create pdf
   pdf: ^2.1.0
+  bot_toast: ^3.0.5
+
 
 dev_dependencies:
   flutter_test:

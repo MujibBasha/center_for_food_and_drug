@@ -75,58 +75,6 @@ class _EntitiesStreamStateState extends State<EntitiesStreamState> {
   }
 }
 
-class ReportStreamState extends StatefulWidget {
-  @override
-  _ReportStreamStateState createState() => _ReportStreamStateState();
-}
-
-class _ReportStreamStateState extends State<ReportStreamState> {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: DataBase().getReportListStream(),
-      builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) {
-          print("gggggggggggggg");
-        }
-        if (!snapshot.hasData) {
-          return Container(
-            child: Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.lightBlueAccent,
-              ),
-            ),
-          );
-        }
-        return ListView.builder(
-          shrinkWrap: true,
-          itemCount: snapshot.data.docs.length,
-          itemBuilder: (context, index) {
-            return ItemOfReportList(
-              reportName: snapshot.data.docs[index].get("report_name"),
-              date: snapshot.data.docs[index].get("date"),
-              onPressed: () {
-                //TODO send this url to pdf viewer
-                //snapshot.data.docs[index].get("url") ,
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ViewPdfScreen(
-                      pdfURL: snapshot.data.docs[index].get("url"),
-                    ),
-                  ),
-                );
-              },
-              by: snapshot.data.docs[index].get("by"),
-              location: snapshot.data.docs[index].get("location"),
-            );
-          },
-        );
-      },
-    );
-  }
-}
-
 class QuestionFieldStreamState extends StatefulWidget {
   final String entityID;
   // final TextEditingController controller;
@@ -207,16 +155,16 @@ class QuestionSelectStreamState extends StatefulWidget {
 }
 
 class _QuestionSelectStreamStateState extends State<QuestionSelectStreamState> {
-  int totalQuestionStored = 0;
+  // int totalQuestionStored = 0;
 
   @override
   void initState() {
     // TODO: implement initState
-    totalQuestionStored =
-        Provider.of<ProviderData>(context, listen: false).documentData.length;
+    // totalQuestionStored =
+    //     Provider.of<ProviderData>(context, listen: false).documentData.length;
 
-    Provider.of<ProviderData>(context, listen: false).questionStored =
-        totalQuestionStored;
+    // Provider.of<ProviderData>(context, listen: false).questionStored =
+    //     totalQuestionStored;
     super.initState();
   }
 
@@ -252,7 +200,7 @@ class _QuestionSelectStreamStateState extends State<QuestionSelectStreamState> {
           itemBuilder: (context, index) {
             return QuestionSelectTileWidget(
               querySnapshot: snapshot.data.docs[index],
-              currentIndex: index + totalQuestionStored, //
+              currentIndex: index, // + totalQuestionStored
             );
           },
           separatorBuilder: (context, index) => Padding(
@@ -265,36 +213,55 @@ class _QuestionSelectStreamStateState extends State<QuestionSelectStreamState> {
   }
 }
 
-//StreamBuilder(
-//       stream:
-//           DataBase().getEntityData(entityID: widget.entityID, pageType: "GIAE"),
-//       builder: (context, AsyncSnapshot snapshot) {
-//         if (snapshot.hasError) {
-//           print("gggggggggggggg");
-//         }
-//         if (!snapshot.hasData) {
-//           return Container(
-//             child: Center(
-//               child: CircularProgressIndicator(
-//                 backgroundColor: Colors.lightBlueAccent,
-//               ),
-//             ),
-//           );
-//         }
-//         return ListView.builder(
-//           shrinkWrap: true,
-//           itemCount: snapshot.data.docs[0].get("number_of_item"),
-//           itemBuilder: (context, index) {
-//             Provider.of<ProviderData>(context, listen: false)
-//                 .controllers
-//                 .add({"question": "", "answer": TextEditingController()});
-//             return QuestionFormTileWidget(
-//               questionTitle: snapshot.data.docs[0].get(questionName[index]),
-//               controller: Provider.of<ProviderData>(context, listen: false)
-//                   .controllers[index]["answer"],
-//               currentIndex: index,
-//             );
-//           },
-//         );
-//       },
-//     );
+//to get all pdf form DataBase
+class ReportStreamState extends StatefulWidget {
+  @override
+  _ReportStreamStateState createState() => _ReportStreamStateState();
+}
+
+class _ReportStreamStateState extends State<ReportStreamState> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: DataBase().getReportListStream(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) {
+          print("gggggggggggggg");
+        }
+        if (!snapshot.hasData) {
+          return Container(
+            child: Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.lightBlueAccent,
+              ),
+            ),
+          );
+        }
+        return ListView.builder(
+          shrinkWrap: true,
+          itemCount: snapshot.data.docs.length,
+          itemBuilder: (context, index) {
+            return ItemOfReportList(
+              reportName: snapshot.data.docs[index].get("report_name"),
+              date: snapshot.data.docs[index].get("date"),
+              onPressed: () {
+                //TODO send this url to pdf viewer
+                //snapshot.data.docs[index].get("url") ,
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ViewPdfScreen(
+                      pdfURL: snapshot.data.docs[index].get("url"),
+                    ),
+                  ),
+                );
+              },
+              by: snapshot.data.docs[index].get("by"),
+              officeName: snapshot.data.docs[index].get("office_name"),
+            );
+          },
+        );
+      },
+    );
+  }
+}

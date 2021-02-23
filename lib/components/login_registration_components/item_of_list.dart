@@ -132,12 +132,12 @@ class ItemOfReportList extends StatefulWidget {
   final String reportName;
   final String date;
   final String by;
-  final String location;
+  final String officeName;
   ItemOfReportList({
     @required this.onPressed,
     @required this.reportName,
     @required this.date,
-    @required this.location,
+    @required this.officeName,
     @required this.by,
   });
 
@@ -160,7 +160,7 @@ class _ItemOfReportListState extends State<ItemOfReportList> {
             children: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 8),
-                  child: Image.asset("assets/images/.png",
+                  child: Image.asset("assets/images/reportLogo.png",
                       width: 60, height: 60, fit: BoxFit.fill)
                   // clip.parent.startsWith("http")
                   //     ? Image.network(clip.thumbPath(), width: 70, height: 50, fit: BoxFit.fill)
@@ -190,7 +190,7 @@ class _ItemOfReportListState extends State<ItemOfReportList> {
                         padding: EdgeInsets.only(bottom: 3),
                       ),
                       Padding(
-                        child: Text("${widget.location}",
+                        child: Text("office :${widget.officeName}",
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.grey[500])),
                         padding: EdgeInsets.only(bottom: 3, left: 5),
