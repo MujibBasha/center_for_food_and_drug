@@ -24,6 +24,12 @@ class ProviderData extends ChangeNotifier {
   int totalCurrentQuestion = 00;
   int questionStored = 0;
 
+  void clearData() {
+    generalEntityInfoDocumentData.clear();
+    controllers.clear();
+    notifyListeners();
+  }
+
   changeTotal(int total) {
     totalCurrentQuestion = total;
     notifyListeners();

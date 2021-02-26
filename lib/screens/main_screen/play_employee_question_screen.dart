@@ -11,7 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 // import 'package:dsc_hackathon_pp/localization/localization_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:provider/provider.dart';
@@ -30,11 +30,11 @@ class _PlayEmployeeQuestionScreenState
     extends State<PlayEmployeeQuestionScreen> {
   bool isLoading = false;
 
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController descriptionsController = TextEditingController();
-  TextEditingController officeNameController = TextEditingController();
+  TextEditingController phoneNumberController;
+  TextEditingController emailController;
+  TextEditingController fullNameController;
+  TextEditingController descriptionsController;
+  TextEditingController officeNameController;
   GlobalKey<ScaffoldState> employeeInfoScaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> employeeInfoFormKey = GlobalKey<FormState>();
   void showSnackBar({
@@ -75,7 +75,8 @@ class _PlayEmployeeQuestionScreenState
   // final image = pw.ImageProvider(
   //   pw.ImageProvider("PdfLogo.png"),
   // );
-  writeOnPdf(BuildContext con) {
+
+  writeOnPdf(BuildContext con) async {
     pdf.addPage(pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: pw.EdgeInsets.all(32),
@@ -138,12 +139,15 @@ class _PlayEmployeeQuestionScreenState
                           mainAxisAlignment: pw.MainAxisAlignment.start,
                           children: <pw.Widget>[
                             pw.Header(
-                                level: 2,
-                                text: Provider.of<ProviderData>(con,
-                                            listen: false)
-                                        .generalEntityInfoDocumentData[index]
-                                    ["question"],
-                                textStyle: pw.TextStyle(fontSize: 18)),
+                              level: 2,
+                              text:
+                                  Provider.of<ProviderData>(con, listen: false)
+                                          .generalEntityInfoDocumentData[index]
+                                      ["question"],
+                              textStyle: pw.TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
                             pw.Header(
                                 level: 3,
                                 text: Provider.of<ProviderData>(con,
@@ -242,12 +246,15 @@ class _PlayEmployeeQuestionScreenState
     Directory documentDirectory =
         await getExternalStorageDirectory(); //getApplicationDocumentsDirectory
     //String documentPath = documentDirectory.path;
-    String documentPath =
-        "storage/emulated/0/center_for_food_and_drug/download/local_archive";
+    String documentPath = "storage/emulated/0/LYFDA/download/local_archive";
     print("Path==> $documentPath");
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day, now.hour,
+        now.minute, now.second, now.millisecond);
+    print("date for pdf file =$date");
 
     pdfName =
-        "${Provider.of<ProviderData>(context, listen: false).currentEntityName}-${Provider.of<ProviderData>(context, listen: false).fullName}-${Provider.of<ProviderData>(context, listen: false).officeName}.pdf";
+        "${Provider.of<ProviderData>(context, listen: false).currentEntityName}-${Provider.of<ProviderData>(context, listen: false).fullName}-${Provider.of<ProviderData>(context, listen: false).officeName}-$date.pdf";
 
     String path = "$documentPath/$pdfName";
     print(path);
@@ -291,8 +298,8 @@ class _PlayEmployeeQuestionScreenState
 
   void _createDownloadReportFolder() async {
     // var dir = await getApplicationDocumentsDirectory();
-    final Directory path = Directory(
-        "storage/emulated/0/center_for_food_and_drug/download/local_archive");
+    final Directory path =
+        Directory("storage/emulated/0/LYFDA/download/local_archive");
 
     if ((await path.exists())) {
       // TODO:
@@ -308,6 +315,15 @@ class _PlayEmployeeQuestionScreenState
   void initState() {
     // TODO: implement initState
     _createDownloadReportFolder();
+    phoneNumberController = TextEditingController(
+        text: Provider.of<ProviderData>(context, listen: false).phoneNumber);
+    emailController = TextEditingController(
+        text: Provider.of<ProviderData>(context, listen: false).email);
+    fullNameController = TextEditingController(
+        text: Provider.of<ProviderData>(context, listen: false).fullName);
+    descriptionsController = TextEditingController();
+    officeNameController = TextEditingController(
+        text: Provider.of<ProviderData>(context, listen: false).officeName);
     super.initState();
   }
 
@@ -369,7 +385,7 @@ class _PlayEmployeeQuestionScreenState
                       context: context,
                       key: "yes_button",
                       typeScreen: "WillPopScope_content"),
-                  style: TextStyle(color: Colors.pink),
+                  style: TextStyle(color: Colors.lightBlueAccent),
                 ),
               ),
               FlatButton(
@@ -381,7 +397,7 @@ class _PlayEmployeeQuestionScreenState
                       context: context,
                       key: "no_button",
                       typeScreen: "WillPopScope_content"),
-                  style: TextStyle(color: Colors.pink),
+                  style: TextStyle(color: Colors.lightBlueAccent),
                 ),
               ),
             ],
@@ -662,14 +678,14 @@ class _PlayEmployeeQuestionScreenState
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 10),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 65),
+                              padding: EdgeInsets.symmetric(horizontal: 8),
                               width: size.width * 0.8,
                               decoration: BoxDecoration(
                                 color: kPrimaryLightColor,
                                 borderRadius: BorderRadius.circular(29),
                               ),
                               child: TextFormField(
+                                maxLines: 5,
                                 autocorrect: false,
                                 style: TextStyle(
                                   color: Colors.black45,
@@ -791,6 +807,7 @@ class _PlayEmployeeQuestionScreenState
                               //     .controllers
                               //     .clear();
                               // pdf.
+                              Navigator.of(context).pop(true);
                               Provider.of<ProviderData>(context, listen: false)
                                   .generalEntityInfoDocumentData
                                   .clear();
@@ -809,7 +826,6 @@ class _PlayEmployeeQuestionScreenState
                               officeNameController.clear();
                               phoneNumberController.clear();
 
-                              Navigator.of(context).pop(true);
                               Navigator.popUntil(context,
                                   ModalRoute.withName(InstDashboardScreen.id));
                             },
@@ -818,7 +834,7 @@ class _PlayEmployeeQuestionScreenState
                                   context: context,
                                   key: "yes_button",
                                   typeScreen: "WillPopScope_content"),
-                              style: TextStyle(color: Colors.pink),
+                              style: TextStyle(color: Colors.lightBlueAccent),
                             ),
                           ),
                           FlatButton(
@@ -830,7 +846,7 @@ class _PlayEmployeeQuestionScreenState
                                   context: context,
                                   key: "no_button",
                                   typeScreen: "WillPopScope_content"),
-                              style: TextStyle(color: Colors.pink),
+                              style: TextStyle(color: Colors.lightBlueAccent),
                             ),
                           ),
                         ],

@@ -8,22 +8,26 @@ import 'package:provider/provider.dart';
 
 class PlayQuestionFieldScreen extends StatefulWidget {
   final String entityID;
+
   PlayQuestionFieldScreen({this.entityID});
+
   @override
   _PlayQuestionFieldScreenState createState() =>
       _PlayQuestionFieldScreenState();
 }
 
 class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
-  @override
-  void dispose() {
-    print("dispose of field");
-    Provider.of<ProviderData>(context, listen: false)
-        .generalEntityInfoDocumentData
-        .clear();
-    Provider.of<ProviderData>(context, listen: false).controllers.clear();
-    super.dispose();
-  }
+  final questionFieldScaffoldKey = GlobalKey<ScaffoldState>();
+
+  // @override
+  // void dispose() {
+  //   print("dispose of field");
+  //   Provider.of<ProviderData>(context, listen: false)
+  //       .generalEntityInfoDocumentData
+  //       .clear();
+  //   Provider.of<ProviderData>(context, listen: false).controllers.clear();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
     return WillPopScope(
       onWillPop: () {
         return showDialog(
-          context: context,
+          context: questionFieldScaffoldKey.currentContext,
           builder: (_) => AlertDialog(
             title: Text(
               getTranslated(
@@ -69,19 +73,24 @@ class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
               FlatButton(
                 onPressed: () async {
                   Navigator.of(context).pop(true);
+
                   Provider.of<ProviderData>(context, listen: false)
                       .generalEntityInfoDocumentData
                       .clear();
                   Provider.of<ProviderData>(context, listen: false)
                       .controllers
                       .clear();
+
+                  //Provider.of<ProviderData>(context, listen: false).clearData();
+
+                  // await Future.delayed(Duration(microseconds: 500));
                 },
                 child: Text(
                   getTranslated(
                       context: context,
                       key: "yes_button",
                       typeScreen: "WillPopScope_content"),
-                  style: TextStyle(color: Colors.pink),
+                  style: TextStyle(color: Colors.lightBlueAccent),
                 ),
               ),
               FlatButton(
@@ -93,7 +102,7 @@ class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
                       context: context,
                       key: "no_button",
                       typeScreen: "WillPopScope_content"),
-                  style: TextStyle(color: Colors.pink),
+                  style: TextStyle(color: Colors.lightBlueAccent),
                 ),
               ),
             ],
@@ -102,6 +111,7 @@ class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
         );
       },
       child: Scaffold(
+        key: questionFieldScaffoldKey,
         appBar: AppBar(
           title: Text("General Info"),
           centerTitle: true,
@@ -145,10 +155,26 @@ class _PlayQuestionFieldScreenState extends State<PlayQuestionFieldScreen> {
                               data.totalCurrentQuestion,
                           builder: (context, total, child) {
                             return MainBar(
-                              text: "answered",
+                              text: "Answered",
                               number: "0/$total",
                             );
                           },
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Selector<ProviderData, int>(
+                          selector: (context, data) =>
+                              data.totalCurrentQuestion,
+                          builder: (context, total, child) {
+                            return MainBar(
+                              text: "Required Questions",
+                              number: "$total",
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: 15,
                         ),
                       ]),
                 ),

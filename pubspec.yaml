@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   firebase_storage: ^4.0.1
   provider: ^4.3.2+3
+  wiredash: ^0.4.0
   ##to create unique id
   uuid: ^2.2.2
   # this section for pdf view
@@ -69,6 +70,16 @@ dependencies:
   ##this section for create pdf
   pdf: ^2.1.0
   bot_toast: ^3.0.5
+
+  #Scanner 
+  flutter_barcode_scanner: ^1.0.2
+
+  flutter_launcher_icons: ^0.8.1
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/LOGO.png"
 
 
 dev_dependencies:

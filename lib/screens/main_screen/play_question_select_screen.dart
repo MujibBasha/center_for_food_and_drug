@@ -17,22 +17,22 @@ class PlayQuestionSelectScreen extends StatefulWidget {
 
 class _PlayQuestionSelectScreenState extends State<PlayQuestionSelectScreen> {
   bool giaeSection = true;
-
-  @override
-  void dispose() {
-    print("dispose of select");
-    Provider.of<ProviderData>(context, listen: false)
-        .reportInfoDocumentData
-        .clear();
-    super.dispose();
-  }
+  final questionSelectScaffoldKey = GlobalKey<ScaffoldState>();
+  // @override
+  // void dispose() {
+  //   print("dispose of select");
+  //   Provider.of<ProviderData>(context, listen: false)
+  //       .reportInfoDocumentData
+  //       .clear();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
         return showDialog(
-          context: context,
+          context: questionSelectScaffoldKey.currentContext,
           builder: (_) => AlertDialog(
             title: Text(
               getTranslated(
@@ -68,16 +68,16 @@ class _PlayQuestionSelectScreenState extends State<PlayQuestionSelectScreen> {
             ),
             actions: [
               FlatButton(
-                onPressed: () async {
+                onPressed: () {
                   // int end = Provider.of<ProviderData>(context, listen: false)
                   //     .reportInfoDocumentData
                   //     .length;
                   // int start = Provider.of<ProviderData>(context, listen: false)
                   //     .questionStored;
+                  Navigator.of(context).pop(true);
                   Provider.of<ProviderData>(context, listen: false)
                       .reportInfoDocumentData
                       .clear();
-                  Navigator.of(context).pop(true);
 
                   // .removeRange(start, end);
                 },
@@ -86,7 +86,7 @@ class _PlayQuestionSelectScreenState extends State<PlayQuestionSelectScreen> {
                       context: context,
                       key: "yes_button",
                       typeScreen: "WillPopScope_content"),
-                  style: TextStyle(color: Colors.pink),
+                  style: TextStyle(color: Colors.lightBlueAccent),
                 ),
               ),
               FlatButton(
@@ -98,7 +98,7 @@ class _PlayQuestionSelectScreenState extends State<PlayQuestionSelectScreen> {
                       context: context,
                       key: "no_button",
                       typeScreen: "WillPopScope_content"),
-                  style: TextStyle(color: Colors.pink),
+                  style: TextStyle(color: Colors.lightBlueAccent),
                 ),
               ),
             ],
@@ -107,6 +107,7 @@ class _PlayQuestionSelectScreenState extends State<PlayQuestionSelectScreen> {
         );
       },
       child: Scaffold(
+        key: questionSelectScaffoldKey,
         appBar: AppBar(
           title: Text("Questionnaire"),
           centerTitle: true,

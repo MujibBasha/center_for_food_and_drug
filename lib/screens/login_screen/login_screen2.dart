@@ -8,6 +8,7 @@ import 'package:center_for_food_and_drug/localization/localization_constants.dar
 import 'package:center_for_food_and_drug/screens/login_screen/background.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/inst_dashboard_screen.dart';
 import 'package:center_for_food_and_drug/screens/registration_screen/signup_screen.dart';
+import 'package:center_for_food_and_drug/screens/reset_password_screen/reset_screen.dart';
 // import 'package:center_for_food_and_drug/screens/reset_password_screen/reset_screen.dart';
 import 'package:center_for_food_and_drug/tasks_provider/provider_data.dart';
 import 'package:center_for_food_and_drug/widgets/local_notification_widget.dart';
@@ -133,20 +134,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    SizedBox(height: size.height * 0.01),
                     Text(
                       "LOGIN",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
-                        height:
-                            size.height * 0.03), // + size.height * 0.35), //+
+                      height: size.height * 0.01,
+                    ), // + size.height * 0.35), //+
                     //TODO Change this Image
-
-                    Image.asset(
-                      "assets/images/main_screen_1.png",
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: Image.asset(
+                        "assets/images/main_login_screen.png",
+                      ),
                     ),
 
-                    SizedBox(height: size.height * 0.03),
+                    SizedBox(height: size.height * 0.01),
                     Form(
                       key: signInFormKey,
                       child: Column(
@@ -211,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     RoundedButton(
-                      color: Colors.pink.shade900,
+                      color: Colors.blue,
                       text: getTranslated(
                           context: context,
                           key: "login_button",
@@ -283,17 +287,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: MaterialButton(
                         highlightColor: Colors.lightBlueAccent,
                         onPressed: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => ResetScreen(
-                          //         showNot: () {
-                          //           setState(() {
-                          //             showNot = true;
-                          //           });
-                          //         },
-                          //       ),2
-                          //     ));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ResetScreen(
+                                  showNot: () {
+                                    setState(() {
+                                      showNot = true;
+                                    });
+                                  },
+                                ),
+                              ));
                           setState(() {
                             hasNotAccount = false;
                             showNot = false;

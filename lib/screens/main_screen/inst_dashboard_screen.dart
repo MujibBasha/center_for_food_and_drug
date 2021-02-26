@@ -7,6 +7,8 @@ import 'package:center_for_food_and_drug/localization/localization_constants.dar
 import 'package:center_for_food_and_drug/screens/main_screen/archive_screen.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/check_list_screen.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/global_archive_list_screen.dart';
+import 'package:center_for_food_and_drug/screens/main_screen/main_component_screen/drawer_screen.dart';
+import 'package:center_for_food_and_drug/screens/main_screen/scanner_screen.dart';
 
 import 'package:center_for_food_and_drug/service/database.dart';
 import 'package:center_for_food_and_drug/tasks_provider/provider_data.dart';
@@ -14,8 +16,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_boom_menu/flutter_boom_menu.dart';
+import 'package:wiredash/wiredash.dart';
 
 class InstDashboardScreen extends StatefulWidget {
   static String id = "InstDashboardScreen";
@@ -29,7 +33,7 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
   final scaffoldDashboardKey = GlobalKey<ScaffoldState>();
   void showSnackBar({String text}) {
     // ignore: deprecated_member_use
-    Scaffold.of(context).showSnackBar(
+    scaffoldDashboardKey.currentState.showSnackBar(
       SnackBar(
         content: Text(
           text,
@@ -41,6 +45,13 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
         backgroundColor: Color(0XFF25347b),
       ),
     );
+  }
+
+  enablesPermisionFromUser() async {
+    final storageStatus = await Permission.storage.request();
+    //final cameraStatus = await Permission.camera.request();
+    final notificationStatus = await Permission.notification.request();
+    // if (storageStatus.isGranted && notificationStatus.isGranted) {
   }
 
   Future getUserInfo() async {
@@ -78,8 +89,8 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
 
   void _createDownloadReportFolder() async {
     // var dir = await getApplicationDocumentsDirectory();
-    final Directory path = Directory(
-        "storage/emulated/0/center_for_food_and_drug/download/local_archive");
+    final Directory path =
+        Directory("storage/emulated/0/LYFDA/download/local_archive");
 
     if ((await path.exists())) {
       // TODO:
@@ -110,11 +121,17 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
     return SafeArea(
       child: Scaffold(
         key: scaffoldDashboardKey,
-        drawer: Drawer(),
+        drawer: DrawerScreen(),
         body: Column(children: [
           Container(
               decoration: BoxDecoration(
-                color: Colors.blueAccent,
+                image: DecorationImage(
+                  image: AssetImage("assets/images/do_more_2.jpg"),
+                  colorFilter: ColorFilter.mode(
+                      Colors.blueAccent.withOpacity(0.35), BlendMode.dstIn),
+                  fit: BoxFit.cover,
+                ),
+                color: Colors.black,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30)),
@@ -260,13 +277,26 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                 child: MaterialButton(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 0.0),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => CheckListScreen(),
-                                      ),
-                                    );
+                                  onPressed: () async {
+                                    final storageStatus =
+                                        await Permission.storage.request();
+
+                                    if (storageStatus.isGranted) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CheckListScreen(),
+                                        ),
+                                      );
+                                    } else {
+                                      showSnackBar(
+                                        text: getTranslated(
+                                            context: context,
+                                            key: "permission_note",
+                                            typeScreen: "general_content"),
+                                      );
+                                    }
                                   },
                                   child: Container(
                                     height: 200,
@@ -287,12 +317,12 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                           height: 3,
                                         ),
                                         Text(
-                                          "Opening Check",
+                                          "New Report",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w600,
-                                              color: Colors.white),
+                                              color: Color(0xff289FF3)),
                                         ),
                                       ],
                                     ),
@@ -313,6 +343,14 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                       EdgeInsets.symmetric(horizontal: 0.0),
                                   onPressed: () {
                                     print("Clicked on Course Booking");
+                                    // ignore: deprecated_member_use
+                                    showSnackBar(
+                                      text: getTranslated(
+                                          context: context,
+                                          key: "unavailable_item",
+                                          typeScreen: "general_content"),
+                                    );
+
                                     // Navigator.pushNamed(context, SearchBookScreen.id);
                                   },
                                   child: Container(
@@ -334,7 +372,7 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                           height: 3,
                                         ),
                                         Text(
-                                          "Create Check",
+                                          "Create Report",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 20,
@@ -363,13 +401,27 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                 child: MaterialButton(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 0.0),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ArchivesScreen(),
-                                      ),
-                                    );
+                                  onPressed: () async {
+                                    final storageStatus =
+                                        await Permission.storage.request();
+
+                                    if (storageStatus.isGranted) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ArchivesScreen(),
+                                        ),
+                                      );
+                                    } else {
+                                      showSnackBar(
+                                        text: getTranslated(
+                                            context: context,
+                                            key: "permission_note",
+                                            typeScreen: "general_content"),
+                                      );
+                                    }
+
                                     // showSnackBar(
                                     //   text: getTranslated(
                                     //       context: context,
@@ -422,9 +474,24 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                 child: MaterialButton(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 0.0),
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    final storageStatus =
+                                        await Permission.storage.request();
+                                    final cameraStatus =
+                                        await Permission.camera.request();
+                                    if (storageStatus.isGranted &&
+                                        cameraStatus.isGranted) {
+                                      Navigator.pushNamed(
+                                          context, ScannerScreen.id);
+                                    } else {
+                                      showSnackBar(
+                                        text: getTranslated(
+                                            context: context,
+                                            key: "permission_note",
+                                            typeScreen: "general_content"),
+                                      );
+                                    }
                                     print("Clicked on Course Booking");
-                                    // Navigator.pushNamed(context, SearchBookScreen.id);
                                   },
                                   child: Container(
                                     height: 200,
@@ -446,12 +513,12 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                                           height: 3,
                                         ),
                                         Text(
-                                          "Prohibited Goods",
+                                          "Scanner", //Prohibited Goods
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.w600,
-                                              color: Colors.white),
+                                              color: Color(0xff289FF3)),
                                         ),
                                       ],
                                     ),
@@ -490,7 +557,76 @@ class _InstDashboardScreenState extends State<InstDashboardScreen> {
                 ),
           ),
         ]),
-        // floatingActionButton: ,
+        floatingActionButton: BoomMenu(
+          fabAlignment: Alignment.topLeft,
+          animatedIcon: AnimatedIcons.view_list,
+          // animatedIconTheme: IconThemeData(size: 22.0),
+          //child: Icon(Icons.add),
+          // marginBottom: 10,
+          // child: Container(
+          //   width: 70,
+          //   height: 70,
+          // ),
+          backgroundColor: Colors.lightBlueAccent.withOpacity(0.6),
+          onOpen: () => print('OPENING DIAL'),
+          onClose: () => print('DIAL CLOSED'),
+          scrollVisible: scrollVisible,
+          overlayColor: Colors.black,
+          overlayOpacity: 0.7,
+          children: [
+            MenuItem(
+              child: Icon(Icons.person_rounded, color: Colors.black),
+              title: "Profiles",
+              titleColor: Colors.white,
+              subtitle: "go to your profile page",
+              subTitleColor: Colors.white,
+              backgroundColor: Colors.blue,
+              onTap: () {
+                print('FIRST CHILD');
+                showSnackBar(
+                  text: getTranslated(
+                      context: context,
+                      key: "unavailable_item",
+                      typeScreen: "general_content"),
+                );
+              },
+            ),
+            MenuItem(
+              child: Icon(Icons.contact_support_outlined, color: Colors.black),
+              title: "support",
+              titleColor: Colors.white,
+              subtitle: "connect with us",
+              subTitleColor: Colors.white,
+              backgroundColor: Colors.green,
+              onTap: () {
+                Wiredash.of(context).show();
+                print('SECOND CHILD');
+                // showSnackBar(
+                //     text: getTranslated(
+                //         context: context,
+                //         key: "unavailable_item",
+                //         typeScreen: "general_content"));
+              },
+            ),
+            MenuItem(
+              child: Icon(Icons.logout, color: Colors.black),
+              title: "Log out",
+              titleColor: Colors.white,
+              subtitle: "connect with us",
+              subTitleColor: Colors.white,
+              backgroundColor: Colors.redAccent,
+              onTap: () {
+                print('SECOND CHILD');
+                showSnackBar(
+                  text: getTranslated(
+                      context: context,
+                      key: "unavailable_item",
+                      typeScreen: "general_content"),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

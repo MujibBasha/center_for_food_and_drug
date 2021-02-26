@@ -10,8 +10,8 @@ import 'package:center_for_food_and_drug/localization/localization_constants.dar
 import 'package:center_for_food_and_drug/screens/login_screen/login_screen2.dart';
 import 'package:center_for_food_and_drug/screens/main_screen/inst_dashboard_screen.dart';
 import 'package:center_for_food_and_drug/screens/registration_screen/background.dart';
-import 'package:center_for_food_and_drug/screens/registration_screen/or_divider.dart';
-import 'package:center_for_food_and_drug/screens/registration_screen/social_icon.dart';
+import 'file:///C:/Users/mjub4/OneDrive/Desktop/center_for_food_and_drug/lib/screens/login_screen/or_divider.dart';
+import 'file:///C:/Users/mjub4/OneDrive/Desktop/center_for_food_and_drug/lib/screens/login_screen/social_icon.dart';
 // import 'package:center_for_food_and_drug/screens/verify_screen/verification_screen.dart';
 import 'package:center_for_food_and_drug/service/auth.dart';
 import 'package:center_for_food_and_drug/service/database.dart';

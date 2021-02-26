@@ -17,17 +17,17 @@ class Background extends StatelessWidget {
             bottom: 0,
             right: 0,
             child: Image.asset(
-              "assets/images/images_for_signup_signin_screen/login_bottom.png",
+              "assets/images/login_bottom.png",
               color: Colors.white54,
             ),
           ),
           Positioned(
             top: 0,
             left: 0,
-            child: Image.asset(
-              "assets/images/images_for_signup_signin_screen/main_top.png",
-              color: Color(0xffEB1555).withOpacity(0.85),
-            ),
+            child: Image.asset("assets/images/main_top.png",
+                color: Colors.lightBlueAccent.withOpacity(0.85)
+                //color: Color(0xffEB1555).withOpacity(0.85),
+                ),
           ),
           // Positioned(
           //   top: 0,

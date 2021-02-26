@@ -42,10 +42,14 @@ class _QuestionFormTileWidgetState extends State<QuestionFormTileWidget> {
       elevation: 10,
       child: Container(
           padding: EdgeInsets.only(top: 10),
-          child: Column(children: [
-            Text(
-              "Q${(widget.currentIndex) + 1} ${this.widget.questionTitle}",
-              style: TextStyle(fontSize: 18),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                "Q${(widget.currentIndex) + 1} ${this.widget.questionTitle}",
+                style: TextStyle(fontSize: 18),
+              ),
             ),
             SizedBox(
               height: 4,
@@ -148,8 +152,10 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
         SizedBox(
           height: 10,
         ),
-        GestureDetector(
-            onTap: () {
+        MaterialButton(
+            highlightColor: Colors.lightBlueAccent,
+            padding: EdgeInsets.all(0),
+            onPressed: () {
               setState(() {
                 optionSelected = widget.querySnapshot.get("option1");
                 // Provider.of<ProviderData>(context,
@@ -174,8 +180,10 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
                 option: "A",
                 description: widget.querySnapshot.get("option1"),
                 optionSelected: optionSelected)),
-        GestureDetector(
-            onTap: () {
+        MaterialButton(
+            highlightColor: Colors.lightBlueAccent,
+            padding: EdgeInsets.all(0),
+            onPressed: () {
               setState(() {
                 optionSelected = widget.querySnapshot.get("option2");
                 // Provider.of<ProviderData>(context, listen: false)
@@ -196,8 +204,10 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
                 option: "B",
                 description: widget.querySnapshot.get("option2"),
                 optionSelected: optionSelected)),
-        GestureDetector(
-            onTap: () {
+        MaterialButton(
+            highlightColor: Colors.lightBlueAccent,
+            padding: EdgeInsets.all(0),
+            onPressed: () {
               setState(() {
                 optionSelected = widget.querySnapshot.get("option3");
                 // Provider.of<ProviderData>(context, listen: false)
@@ -218,8 +228,10 @@ class _QuestionSelectTileWidgetState extends State<QuestionSelectTileWidget> {
                 option: "C",
                 description: widget.querySnapshot.get("option3"),
                 optionSelected: optionSelected)),
-        GestureDetector(
-            onTap: () {
+        MaterialButton(
+            highlightColor: Colors.lightBlueAccent,
+            padding: EdgeInsets.all(0),
+            onPressed: () {
               setState(() {
                 optionSelected = widget.querySnapshot.get("option4");
                 // Provider.of<ProviderData>(context, listen: false)

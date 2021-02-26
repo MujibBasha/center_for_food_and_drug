@@ -28,7 +28,7 @@ class _LocalArchiveListScreenState extends State<LocalArchiveListScreen> {
 
     var fm = FileManager(
         root: Directory(
-            "storage/emulated/0/center_for_food_and_drug/download/local_archive")); // any specific path you need to get specific file extensions from at as a list of file like(/storage/emulated/0/name of folder in your phone"
+            "storage/emulated/0/LYFDA/download/local_archive")); // any specific path you need to get specific file extensions from at as a list of file like(/storage/emulated/0/name of folder in your phone"
     //TODO change to this  /data/user/0/com.lightmoonstudioo.dsc_hackathon_pp/app_flutter/download/localPDF/ specific path folder
     files = await fm.filesTree(extensions: [
       "pdf",
@@ -59,8 +59,8 @@ class _LocalArchiveListScreenState extends State<LocalArchiveListScreen> {
 
   void _createDownloadReportFolder() async {
     // var dir = await getApplicationDocumentsDirectory();
-    final Directory path = Directory(
-        "storage/emulated/0/center_for_food_and_drug/download/local_archive");
+    final Directory path =
+        Directory("storage/emulated/0/LYFDA/download/local_archive");
 
     if ((await path.exists())) {
       // TODO:
@@ -85,42 +85,48 @@ class _LocalArchiveListScreenState extends State<LocalArchiveListScreen> {
     return Container(
       // key: scaffoldAddMembersScreen,
       //0XFF0A0E21
-      child: ListView.builder(
-        //if file/folder list is grabbed, then show here
-        itemCount: files?.length ?? 0,
-        itemBuilder: (context, index) {
-          //TODO add ability to remove current content form phone
-          return SlidableWidget(
-              child: ItemOfLocalContent(
-                currentFile: files[index],
-              ),
-              isLocalContent: true,
-              slidableOnPressed: (SlidableAction action) async {
-                switch (action) {
-                  case SlidableAction.delete:
-                    final status = await Permission.storage.request();
-                    if (status.isGranted) {
-                      print("delete current content");
-                      await files[index].delete();
-                      setState(() {
-                        getFiles();
-                      });
-                      // var dir = await getApplicationDocumentsDirectory();
-                    }
-                    break;
-                  case SlidableAction.more:
-                    // ignore: deprecated_member_use
-                    showSnackBar(
-                        text: "No more option", action: SlidableAction.more);
+      child: files?.length == 0
+          ? Container(
+              height: 150,
+              child: Image.asset("assets/images/dashboard_logo.png"),
+            )
+          : ListView.builder(
+              //if file/folder list is grabbed, then show here
+              itemCount: files?.length ?? 0,
+              itemBuilder: (context, index) {
+                //TODO add ability to remove current content form phone
+                return SlidableWidget(
+                    child: ItemOfLocalContent(
+                      currentFile: files[index],
+                    ),
+                    isLocalContent: true,
+                    slidableOnPressed: (SlidableAction action) async {
+                      switch (action) {
+                        case SlidableAction.delete:
+                          final status = await Permission.storage.request();
+                          if (status.isGranted) {
+                            print("delete current content");
+                            await files[index].delete();
+                            setState(() {
+                              getFiles();
+                            });
+                            // var dir = await getApplicationDocumentsDirectory();
+                          }
+                          break;
+                        case SlidableAction.more:
+                          // ignore: deprecated_member_use
+                          showSnackBar(
+                              text: "No more option",
+                              action: SlidableAction.more);
 
-                    break;
-                  case SlidableAction.downloadVideo:
-                    print("you can not Download this video ");
-                    break;
-                }
-              });
-        },
-      ),
+                          break;
+                        case SlidableAction.downloadVideo:
+                          print("you can not Download this video ");
+                          break;
+                      }
+                    });
+              },
+            ),
     );
   }
 }
